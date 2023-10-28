@@ -136,6 +136,8 @@ struct razer_mouse_device {
 
     char serial[23]; // Now storing a random serial to be used with old devices that don't support it
 
+    unsigned char expected_transaction_id;
+
     struct {
         unsigned char led;
         unsigned char dpi;
