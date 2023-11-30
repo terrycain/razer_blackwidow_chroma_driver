@@ -98,6 +98,13 @@ static int razer_send_payload(struct razer_mouse_device *device, struct razer_re
 {
     int err;
 
+    if (device->expected_transaction_id > 0 &&
+        request->transaction_id.id != device->expected_transaction_id) {
+        WARN(1, "Expected transaction_id %x for request, got %x instead. "
+                "Please report this at https://github.com/openrazer/openrazer/issues!\n",
+             device->expected_transaction_id, request->transaction_id.id);
+    }
+
     request->crc = razer_calculate_crc(request);
 
     mutex_lock(&device->lock);
@@ -625,6 +632,115 @@ static ssize_t razer_attr_read_device_type(struct device *dev, struct device_att
     return sprintf(buf, device_type);
 }
 
+static int razer_get_transaction_id(unsigned short usb_pid)
+{
+    switch (usb_pid) {
+        case USB_DEVICE_ID_RAZER_ATHERIS_RECEIVER:
+        case USB_DEVICE_ID_RAZER_BASILISK_ULTIMATE_RECEIVER:
+        case USB_DEVICE_ID_RAZER_BASILISK_ULTIMATE_WIRED:
+        case USB_DEVICE_ID_RAZER_BASILISK_V2:
+        case USB_DEVICE_ID_RAZER_BASILISK_V3:
+        case USB_DEVICE_ID_RAZER_BASILISK_V3_PRO_WIRED:
+        case USB_DEVICE_ID_RAZER_BASILISK_V3_PRO_WIRELESS:
+        case USB_DEVICE_ID_RAZER_COBRA_PRO:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V2_LITE:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V2_X_HYPERSPEED:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V3:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V3_PRO_WIRED:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V3_PRO_WIRELESS:
+        case USB_DEVICE_ID_RAZER_HYPERPOLLING_WIRELESS_DONGLE:
+        case USB_DEVICE_ID_RAZER_MAMBA_ELITE:
+        case USB_DEVICE_ID_RAZER_NAGA_LEFT_HANDED_2020:
+        case USB_DEVICE_ID_RAZER_NAGA_PRO_WIRED:
+        case USB_DEVICE_ID_RAZER_NAGA_PRO_WIRELESS:
+        case USB_DEVICE_ID_RAZER_NAGA_V2_HYPERSPEED_RECEIVER:
+        case USB_DEVICE_ID_RAZER_NAGA_X:
+        case USB_DEVICE_ID_RAZER_OROCHI_V2_BLUETOOTH:
+        case USB_DEVICE_ID_RAZER_OROCHI_V2_RECEIVER:
+        case USB_DEVICE_ID_RAZER_PRO_CLICK_MINI_RECEIVER:
+        case USB_DEVICE_ID_RAZER_PRO_CLICK_RECEIVER:
+        case USB_DEVICE_ID_RAZER_PRO_CLICK_WIRED:
+        case USB_DEVICE_ID_RAZER_VIPER_8K:
+        case USB_DEVICE_ID_RAZER_VIPER_MINI_SE_WIRED:
+        case USB_DEVICE_ID_RAZER_VIPER_MINI_SE_WIRELESS:
+        case USB_DEVICE_ID_RAZER_VIPER_V2_PRO_WIRED:
+        case USB_DEVICE_ID_RAZER_VIPER_V2_PRO_WIRELESS:
+        case USB_DEVICE_ID_RAZER_VIPER_V3_HYPERSPEED:
+            return 0x1f;
+
+        case USB_DEVICE_ID_RAZER_ABYSSUS:
+        case USB_DEVICE_ID_RAZER_ABYSSUS_2000:
+        case USB_DEVICE_ID_RAZER_ABYSSUS_ELITE_DVA_EDITION:
+        case USB_DEVICE_ID_RAZER_ABYSSUS_ESSENTIAL:
+        case USB_DEVICE_ID_RAZER_ABYSSUS_V2:
+        case USB_DEVICE_ID_RAZER_BASILISK:
+        case USB_DEVICE_ID_RAZER_BASILISK_ESSENTIAL:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_2000:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_3500:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_CHROMA:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_ELITE:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_ESSENTIAL:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_ESSENTIAL_2021:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_ESSENTIAL_WHITE_EDITION:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V2:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V2_MINI:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V2_PRO_WIRED:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_V2_PRO_WIRELESS:
+        case USB_DEVICE_ID_RAZER_LANCEHEAD_TE_WIRED:
+        case USB_DEVICE_ID_RAZER_LANCEHEAD_WIRED:
+        case USB_DEVICE_ID_RAZER_LANCEHEAD_WIRELESS:
+        case USB_DEVICE_ID_RAZER_LANCEHEAD_WIRELESS_RECEIVER:
+        case USB_DEVICE_ID_RAZER_LANCEHEAD_WIRELESS_WIRED:
+        case USB_DEVICE_ID_RAZER_MAMBA_2012_WIRED:
+        case USB_DEVICE_ID_RAZER_MAMBA_2012_WIRELESS:
+        case USB_DEVICE_ID_RAZER_MAMBA_WIRELESS_RECEIVER:
+        case USB_DEVICE_ID_RAZER_MAMBA_WIRELESS_WIRED:
+        case USB_DEVICE_ID_RAZER_NAGA_CHROMA:
+        case USB_DEVICE_ID_RAZER_NAGA_HEX_V2:
+        case USB_DEVICE_ID_RAZER_OUROBOROS:
+        case USB_DEVICE_ID_RAZER_TAIPAN:
+        case USB_DEVICE_ID_RAZER_VIPER:
+        case USB_DEVICE_ID_RAZER_VIPER_MINI:
+        case USB_DEVICE_ID_RAZER_VIPER_ULTIMATE_WIRED:
+        case USB_DEVICE_ID_RAZER_VIPER_ULTIMATE_WIRELESS:
+            return 0x3f;
+
+        case USB_DEVICE_ID_RAZER_ABYSSUS_1800:
+        case USB_DEVICE_ID_RAZER_BASILISK_X_HYPERSPEED:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_1800:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_2013:
+        case USB_DEVICE_ID_RAZER_DIAMONDBACK_CHROMA:
+        case USB_DEVICE_ID_RAZER_IMPERATOR:
+        case USB_DEVICE_ID_RAZER_MAMBA_TE_WIRED:
+        case USB_DEVICE_ID_RAZER_MAMBA_WIRED:
+        case USB_DEVICE_ID_RAZER_MAMBA_WIRELESS:
+        case USB_DEVICE_ID_RAZER_NAGA_2012:
+        case USB_DEVICE_ID_RAZER_NAGA_2014:
+        case USB_DEVICE_ID_RAZER_NAGA_EPIC_CHROMA:
+        case USB_DEVICE_ID_RAZER_NAGA_EPIC_CHROMA_DOCK:
+        case USB_DEVICE_ID_RAZER_NAGA_HEX:
+        case USB_DEVICE_ID_RAZER_NAGA_HEX_RED:
+        case USB_DEVICE_ID_RAZER_OROCHI_2011:
+            return 0xff;
+
+        /* Unclear if there's single transaction_id, skip for now */
+        case USB_DEVICE_ID_RAZER_NAGA_TRINITY: // 0x1f/0x3f (pcaps say 0x1f only)
+        case USB_DEVICE_ID_RAZER_OROCHI_2013: // 0x3f/0xff (notes say 0xff)
+        case USB_DEVICE_ID_RAZER_OROCHI_CHROMA: // 0x3f/0xff (pcaps say 0xff only)
+            return -EINVAL;
+
+        /* Doesn't use regular protocol with transaction ID */
+        case USB_DEVICE_ID_RAZER_DEATHADDER_3_5G:
+        case USB_DEVICE_ID_RAZER_DEATHADDER_3_5G_BLACK:
+            return -ENOTSUPP;
+
+        /* Every device should be covered above already */
+        default:
+            WARN_ON_ONCE(1);
+            return -ENODEV;
+    }
+}
+
 /**
  * Read device file "get_firmware_version"
  *
@@ -1105,6 +1221,7 @@ static ssize_t razer_attr_read_device_serial(struct device *dev, struct device_a
     case USB_DEVICE_ID_RAZER_DEATHADDER_V2_LITE:
     case USB_DEVICE_ID_RAZER_NAGA_V2_HYPERSPEED_RECEIVER:
     case USB_DEVICE_ID_RAZER_VIPER_V3_HYPERSPEED:
+    case USB_DEVICE_ID_RAZER_MAMBA_ELITE:
         request.transaction_id.id = 0x1f;
         break;
 
@@ -1393,6 +1510,7 @@ static ssize_t razer_attr_read_poll_rate(struct device *dev, struct device_attri
     case USB_DEVICE_ID_RAZER_DEATHADDER_V2_LITE:
     case USB_DEVICE_ID_RAZER_NAGA_V2_HYPERSPEED_RECEIVER:
     case USB_DEVICE_ID_RAZER_VIPER_V3_HYPERSPEED:
+    case USB_DEVICE_ID_RAZER_MAMBA_ELITE:
         request = razer_chroma_misc_get_polling_rate();
         request.transaction_id.id = 0x1f;
         break;
@@ -1527,6 +1645,7 @@ static ssize_t razer_attr_write_poll_rate(struct device *dev, struct device_attr
     case USB_DEVICE_ID_RAZER_DEATHADDER_V2_LITE:
     case USB_DEVICE_ID_RAZER_NAGA_V2_HYPERSPEED_RECEIVER:
     case USB_DEVICE_ID_RAZER_VIPER_V3_HYPERSPEED:
+    case USB_DEVICE_ID_RAZER_MAMBA_ELITE:
         request = razer_chroma_misc_set_polling_rate(polling_rate);
         request.transaction_id.id = 0x1f;
         break;
@@ -4604,6 +4723,7 @@ static void razer_mouse_init(struct razer_mouse_device *dev, struct usb_interfac
 {
     struct usb_device *usb_dev = interface_to_usbdev(intf);
     unsigned int rand_serial = 0;
+    int val;
 
     // Initialise mutex
     mutex_init(&dev->lock);
@@ -4613,6 +4733,10 @@ static void razer_mouse_init(struct razer_mouse_device *dev, struct usb_interfac
     dev->usb_pid = usb_dev->descriptor.idProduct;
     dev->usb_interface_protocol = intf->cur_altsetting->desc.bInterfaceProtocol;
     dev->usb_interface_subclass = intf->cur_altsetting->desc.bInterfaceSubClass;
+
+    val = razer_get_transaction_id(dev->usb_pid);
+    if (val > 0)
+        dev->expected_transaction_id = val;
 
     // Get a "random" integer
     get_random_bytes(&rand_serial, sizeof(unsigned int));
