@@ -975,7 +975,7 @@ class RazerDevice(DBusService):
                     self.logger.debug('getting serial: {0} count:{1}'.format(serial, count))
 
             if serial == '' or serial == 'Default string' or serial == 'empty (NULL)' or serial == 'As printed in the D cover':
-                serial = 'UNKWN{0:012}'.format(random.randint(0, 4096))
+                serial = "".join([i for i in os.path.basename(self._device_path) if i.isalnum()])
 
             self._serial = serial.replace(' ', '_')
 
