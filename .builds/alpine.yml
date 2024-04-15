@@ -1,4 +1,4 @@
-image: alpine/edge
+image: alpine/latest
 packages:
   - astyle
   - dbus-x11

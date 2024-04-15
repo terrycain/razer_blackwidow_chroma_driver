@@ -64,6 +64,7 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Razer Blade 15 Mercury (Mid 2019)             |  1532:0245  |
 | Razer Blade 15 Base (Mid 2019)                |  1532:0246  |
 | Razer Blade Stealth (Late 2019)               |  1532:024A  |
+| Razer Blade Advanced (Late 2019)              |  1532:024B  |
 | Razer Blade Pro (Late 2019)                   |  1532:024C  |
 | Razer Blade 15 Studio Edition (2019)          |  1532:024D  |
 | Razer BlackWidow V3                           |  1532:024E  |
@@ -91,6 +92,7 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Razer Blade 17 Pro (Mid 2021)                 |  1532:0279  |
 | Razer Blade 15 Base (2022)                    |  1432:027A  |
 | Razer Huntsman Mini Analog                    |  1532:0282  |
+| Razer BlackWidow V4                           |  1532:0287  |
 | Razer Blade 15 Advanced (Early 2022)          |  1532:028A  |
 | Razer Blade 17 (2022)                         |  1532:028B  |
 | Razer Blade 14 (2022)                         |  1532:028C  |
@@ -104,6 +106,7 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Razer Blade 15 (2023)                         |  1532:029E  |
 | Razer Blade 16 (2023)                         |  1532:029F  |
 | Razer Blade 18 (2023)                         |  1532:02A0  |
+| Razer Ornata V3                               |  1532:02A1  |
 | Razer Ornata V3 X                             |  1532:02A2  |
 | Razer BlackWidow V3 Tenkeyless                |  1532:0A24  |
 
@@ -191,7 +194,8 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Razer Viper V2 Pro (Wireless)                 |  1532:00A6  |
 | Razer Basilisk V3 Pro (Wired)                 |  1532:00AA  |
 | Razer Basilisk V3 Pro (Wireless)              |  1532:00AB  |
-| Razer Cobra Pro                               |  1532:00B0  |
+| Razer Cobra Pro (Wired)                       |  1532:00AF  |
+| Razer Cobra Pro (Wireless)                    |  1532:00B0  |
 | Razer DeathAdder V3                           |  1532:00B2  |
 | Razer HyperPolling Wireless Dongle            |  1532:00B3  |
 | Razer Naga V2 HyperSpeed (Receiver)           |  1532:00B4  |
@@ -261,20 +265,20 @@ This will output something similar to this:
 
 Official packages are available for these distributions (and their derivatives):
 
-* [Ubuntu](https://openrazer.github.io/#ubuntu)
 * [Debian](https://openrazer.github.io/#debian)
-* [Arch Linux](https://openrazer.github.io/#arch)
 * [Fedora](https://openrazer.github.io/#fedora)
-* [openSUSE](https://openrazer.github.io/#opensuse)
 * [Mageia](https://openrazer.github.io/#mageia)
+* [openSUSE](https://openrazer.github.io/#opensuse)
+* [Ubuntu](https://openrazer.github.io/#ubuntu)
 
 Community supported packages are available for:
 
+* [Alpine Linux](https://openrazer.github.io/#alpine)
+* [Arch Linux](https://openrazer.github.io/#arch)
 * [Gentoo](https://openrazer.github.io/#gentoo)
 * [NixOS](https://openrazer.github.io/#nixos)
-* [Red Hat / CentOS](https://openrazer.github.io/#redhat)
-* [Solus](https://openrazer.github.io/#solus)
 * [Slackware](https://openrazer.github.io/#slackware)
+* [Solus](https://openrazer.github.io/#solus)
 * [Void Linux](https://openrazer.github.io/#voidlinux)
 
 ## Applications

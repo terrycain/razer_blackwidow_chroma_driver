@@ -1979,7 +1979,7 @@ static DEVICE_ATTR(channel6_led_brightness,                 0660, razer_attr_rea
 
 static DEVICE_ATTR(is_mug_present,                          0440, razer_attr_read_is_mug_present,                 NULL);
 
-void razer_accessory_init(struct razer_accessory_device *dev, struct usb_interface *intf, struct hid_device *hdev)
+static void razer_accessory_init(struct razer_accessory_device *dev, struct usb_interface *intf, struct hid_device *hdev)
 {
     struct usb_device *usb_dev = interface_to_usbdev(intf);
     unsigned int rand_serial = 0;

@@ -464,8 +464,8 @@ class KeyboardKeyManager(object):
 
                     if self._current_macro_bind_key is None:
                         # Restrict macro bind keys to M1-M5
-                        if key_name not in ('M1', 'M2', 'M3', 'M4', 'M5'):
-                            self._logger.warning("Macros are only for M1-M5 for now.")
+                        if key_name not in ('M1', 'M2', 'M3', 'M4', 'M5', 'M6'):
+                            self._logger.warning("Macros are only for M1-M6 for now.")
                             self._recording_macro = False
                             self._parent.setMacroMode(False)
                         else:

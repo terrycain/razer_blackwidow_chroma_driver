@@ -205,7 +205,7 @@ struct razer_report razer_chroma_standard_get_led_brightness(unsigned char varia
  * Standard Matrix Effects Functions
  */
 
-struct razer_report razer_chroma_standard_matrix_effect_base(unsigned char arg_size, unsigned char effect_id)
+static struct razer_report razer_chroma_standard_matrix_effect_base(unsigned char arg_size, unsigned char effect_id)
 {
     struct razer_report report = get_razer_report(0x03, 0x0A, arg_size);
     report.arguments[0] = effect_id;
@@ -478,7 +478,7 @@ struct razer_report razer_chroma_standard_matrix_set_custom_frame(unsigned char 
 /**
  * Sets up the extended matrix effect payload
  */
-struct razer_report razer_chroma_extended_matrix_effect_base(unsigned char arg_size, unsigned char variable_storage, unsigned char led_id, unsigned char effect_id)
+static struct razer_report razer_chroma_extended_matrix_effect_base(unsigned char arg_size, unsigned char variable_storage, unsigned char led_id, unsigned char effect_id)
 {
     struct razer_report report = get_razer_report(0x0F, 0x02, arg_size);
 
@@ -781,7 +781,7 @@ struct razer_report razer_chroma_extended_matrix_set_custom_frame2(unsigned char
 /**
  * Sets up the extended matrix effect payload for mouse devices
  */
-struct razer_report razer_chroma_mouse_extended_matrix_effect_base(unsigned char arg_size, unsigned char variable_storage, unsigned char led_id, unsigned char effect_id)
+static struct razer_report razer_chroma_mouse_extended_matrix_effect_base(unsigned char arg_size, unsigned char variable_storage, unsigned char led_id, unsigned char effect_id)
 {
     struct razer_report report = get_razer_report(0x03, 0x0D, arg_size);
 
@@ -1544,16 +1544,6 @@ struct razer_report razer_chroma_misc_set_hyperpolling_wireless_dongle_indicator
     }
 
     report.arguments[0] = mode;
-
-    return report;
-}
-
-/**
- * Get LED mode for HyperPolling Wireless Dongle
- */
-struct razer_report razer_chroma_misc_get_hyperpolling_wireless_dongle_indicator_led_mode(void)
-{
-    struct razer_report report = get_razer_report(0x07, 0x90, 0x01);
 
     return report;
 }
