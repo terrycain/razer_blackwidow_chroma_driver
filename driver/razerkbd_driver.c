@@ -3346,6 +3346,11 @@ static int razer_event(struct hid_device *hdev, struct hid_field *field, struct 
         translation = find_translation(chroma_keys_4, usage->code);
         break;
 
+    case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRED:
+    case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRELESS:
+        translation = find_translation(chroma_keys_6, usage->code);
+        break;
+
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V3:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V3_PRO_WIRED:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4:
@@ -3354,12 +3359,6 @@ static int razer_event(struct hid_device *hdev, struct hid_field *field, struct 
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2:
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_WIRED:
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_WIRELESS:
-    case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRED:
-        translation = find_translation(chroma_keys_6, usage->code);
-        break;
-    case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRELESS:
-        translation = find_translation(chroma_keys_6, usage->code);
-        break;
 
     default:
         translation = find_translation(chroma_keys, usage->code);
