@@ -192,13 +192,12 @@ while IFS= read -r device_raw; do
     device_name_simple=$(echo "$device_name" | tr -d ' ' | tr -d '(' | tr -d ')' | tr '[:upper:]' '[:lower:]')
     filename="./pylib/openrazer/_fake_driver/$device_name_simple.cfg"
 
-    # There are two "Razer Kraken 7.1"
-    if [ "$device_pid" = "0506" ]; then
-        filename=${filename%.cfg}_2.cfg
-    fi
-
-    # There are two "Razer Ornata V3 X"
-    if [ "$device_pid" = "02A2" ]; then
+    # There are some devices that have multiple PID for the same codename.
+    # Why exactly I'm not sure, but we need to add a suffix to the fake driver file then.
+    if [ "$device_pid" = "0506" ] || # Razer Kraken 7.1
+        [ "$device_pid" = "02A2" ] || # Razer Ornata V3 X
+        [ "$device_pid" = "00C2" ] || # Razer DeathAdder V3 Pro (Wired)
+        [ "$device_pid" = "00C3" ]; then # Razer DeathAdder V3 Pro (Wireless)
         filename=${filename%.cfg}_2.cfg
     fi
 

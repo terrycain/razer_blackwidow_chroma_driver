@@ -72,26 +72,27 @@ class BatteryNotifier(threading.Thread):
         now = datetime.datetime.now()
 
         if (now - self._last_notify_time).seconds > self.frequency:
-            # Update last notified
-            self._last_notify_time = now
-
             battery_level = self._get_battery_func()
-            battery_percent = int(round(battery_level, 0))
+            battery_percent = round(battery_level)
 
-            # Sometimes on wifi don't get batt
-            if battery_level == -1.0:
-                time.sleep(0.2)
-                battery_level = self._get_battery_func()
+            # Sometimes due to various issues we don't get the percentage correctly.
+            # Just ignore them and don't show a bogus notification.
+            # See also: https://github.com/openrazer/openrazer/issues/2122
+            if battery_level in (0.0, -1.0):
+                self._logger.debug("Got bogus battery value: {0}, ignoring.".format(battery_level))
+                # Since we don't update _last_notify_time here we're going to retry very soon again.
+                # Sleep a bit so we don't spam the device with requests.
+                time.sleep(10)
+                return
+
+            # Update the last notified time so that we alert in the configured frequency.
+            self._last_notify_time = now
 
             title = self._device_name
             message = "Battery is {0}%".format(battery_percent)
             icon = "battery-full"
 
-            if battery_level == 0.0:
-                # Do nothing
-                pass
-
-            elif battery_level <= 10.0:
+            if battery_level <= 10.0:
                 message = "Battery is low ({0}%). Please charge your device".format(battery_percent)
                 icon = "battery-empty"
 

@@ -4,7 +4,7 @@ Source: https://github.com/openrazer/openrazer
 Files-Excluded: debian
 
 Files: *
-Copyright: 2015-2016 Terry Cain <terry@terrys-home.co.uk>
+Copyright: 2015-2016 Terri Cain <terri@dolphincorp.co.uk>
            2015-2016 Tim Theede <pez2001@voyagerproject.de>
            2015-2016 Gabriele Musco <emaildigabry@gmail.com>
 License: GPL-2+

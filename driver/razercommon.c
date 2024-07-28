@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
  * Copyright (c) 2015 Tim Theede <pez2001@voyagerproject.de>
- *               2015 Terry Cain <terry@terrys-home.co.uk>
+ *               2015 Terri Cain <terri@dolphincorp.co.uk>
  */
 
 #include <linux/kernel.h>

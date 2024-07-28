@@ -1,5 +1,5 @@
 Source: openrazer
-Maintainer: Terry Cain <terry@terrys-home.co.uk>
+Maintainer: Luca Weiss <debian@lucaweiss.eu>
 Section: misc
 Priority: optional
 Build-Depends: debhelper (>= 11),
@@ -67,7 +67,7 @@ Depends: ${misc:Depends},
          python3-setproctitle,
          python3-notify2,
          python3-daemonize (>= 2.4.0),
-         gir1.2-gtk-3.0,
+         gir1.2-glib-2.0,
          xautomation,
          dbus-session-bus
 Recommends: python3-openrazer (= ${binary:Version})

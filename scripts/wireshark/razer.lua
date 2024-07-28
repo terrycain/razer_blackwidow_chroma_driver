@@ -1,6 +1,6 @@
 -- Thanks to karlp for making a nice lua protocol example for USB https://github.com/karlp/swopy
 --
--- Copyright 2015 Terry Cain <terry@terrys-home.co.uk>
+-- Copyright 2015 Terri Cain <terri@dolphincorp.co.uk>
 -- To install put in ~/.wireshark/plugins/FILENAME.lua
 -- or ran with wireshark -X lua_script:FILENAME.lua
 --

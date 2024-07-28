@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
- * Copyright (c) 2015 Terry Cain <terrys-home.co.uk>
+ * Copyright (c) 2015 Terri Cain <terri@dolphincorp.co.uk>
  */
 
 #include "razerchromacommon.h"
@@ -1213,8 +1213,8 @@ struct razer_report razer_chroma_misc_set_dpi_xy(unsigned char variable_storage,
     struct razer_report report = get_razer_report(0x04, 0x05, 0x07);
 
     // Keep the DPI within bounds
-    dpi_x = clamp_u16(dpi_x, 100, 30000);
-    dpi_y = clamp_u16(dpi_y, 100, 30000);
+    dpi_x = clamp_u16(dpi_x, 100, 35000);
+    dpi_y = clamp_u16(dpi_y, 100, 35000);
 
     report.arguments[0] = VARSTORE;
 

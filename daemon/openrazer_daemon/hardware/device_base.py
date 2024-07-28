@@ -326,6 +326,11 @@ class RazerDevice(DBusService):
         if self.config.getboolean('Startup', "restore_persistence") is True:
             self.restore_effect()
 
+            # Some devices need setting a second time after encountering Razer Synapse on Windows
+            if self.config.getboolean('Startup', "persistence_dual_boot_quirk") is True:
+                self.logger.debug("Restoring effect persistence again (dual boot quirk)")
+                self.restore_effect()
+
     def send_effect_event(self, effect_name, *args):
         """
         Send effect event

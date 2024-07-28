@@ -2,7 +2,6 @@ image: alpine/latest
 packages:
   - astyle
   - dbus-x11
-  - gtk+3.0
   - linux-lts-dev
   - py3-autopep8
   - py3-daemonize
@@ -29,10 +28,10 @@ tasks:
 
       # Check with pylint for errors
       ./scripts/ci/check-pylint.sh
-      # Check for duplicate fake driver serials
-      ./scripts/ci/test-duplicate-fake-driver-serials.sh
       # Check for auto-generated files
       ./scripts/ci/test-auto-generate.sh
+      # Check for hex casing issues
+      ./scripts/ci/test-hex-casing.sh
 
   - compile-driver: |
       cd openrazer

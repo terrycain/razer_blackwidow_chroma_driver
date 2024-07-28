@@ -283,6 +283,7 @@ class RazerDaemon(DBusService):
             'sync_effects_enabled': True,
             'devices_off_on_screensaver': True,
             'restore_persistence': True,
+            'persistence_dual_boot_quirk': False,
         }
 
         if config_file is not None and os.path.exists(config_file):
@@ -304,7 +305,7 @@ class RazerDaemon(DBusService):
         if persistence_file is not None and os.path.exists(persistence_file):
             try:
                 self._persistence.read(persistence_file)
-            except configparser.Error:
+            except (configparser.Error, UnicodeDecodeError):
                 self.logger.warning('Failed to read persistence config, resetting!', exc_info=True)
                 with open(persistence_file, "w") as f:
                     f.writelines("")

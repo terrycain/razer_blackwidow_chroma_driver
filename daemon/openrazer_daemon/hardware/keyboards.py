@@ -396,7 +396,28 @@ class RazerBlackWidowV3ProWired(_RippleKeyboard):
                'set_starlight_random_effect', 'set_starlight_single_effect', 'set_starlight_dual_effect',
                'set_ripple_effect', 'set_ripple_effect_random_colour',
                # Battery
-               'set_charge_effect', 'set_charge_colour', 'get_battery', 'is_charging', 'set_low_battery_threshold']
+               'set_charge_effect', 'set_charge_colour', 'get_battery', 'is_charging', 'get_low_battery_threshold', 'set_low_battery_threshold']
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src/3809-1-EN-v1.png"
+
+
+class RazerBlackWidowV3ProWireless(RazerBlackWidowV3ProWired):
+    """
+    Class for the Razer BlackWidow v3 Pro 2.4 Ghz Wireless
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Razer_BlackWidow_V3_Pro(_\d+)?(-if01)?-event-kbd')
+
+    USB_PID = 0x025C
+    METHODS = ['get_device_type_keyboard', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
+               'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
+               'set_custom_effect', 'set_key_row', 'get_game_mode', 'set_game_mode', 'get_macro_mode', 'set_macro_mode',
+               'get_macro_effect', 'set_macro_effect', 'get_macros', 'delete_macro', 'add_macro',
+               'set_starlight_random_effect', 'set_starlight_single_effect', 'set_starlight_dual_effect',
+               # TODO:
+               # Ripple works with this keyboard when plugged as wired but failed
+               # to get it to work in wireless mode.
+               # 'set_ripple_effect', 'set_ripple_effect_random_colour',
+               'set_charge_effect', 'set_charge_colour', 'get_battery', 'is_charging', 'get_low_battery_threshold', 'set_low_battery_threshold']
 
     DEVICE_IMAGE = "https://dl.razerzone.com/src/3809-1-EN-v1.png"
 
@@ -804,6 +825,25 @@ class RazerOrnataV3X_Alternate(RazerOrnataV3X):
     Class for the Razer Ornata V3 X (Alternate)
     """
     USB_PID = 0x02A2
+
+
+class RazerOrnataV3Tenkeyless(_RippleKeyboard):
+    """
+    Class for the Razer Ornata V3 Tenkeyless
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Ornata_V3_Tenkeyless(-if01)?-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x02A3
+    HAS_MATRIX = True
+    MATRIX_DIMS = [1, 8]
+    METHODS = ['get_device_type_keyboard', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
+               'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
+               'set_custom_effect', 'set_key_row', 'get_game_mode', 'set_game_mode', 'get_macro_mode', 'set_macro_mode',
+               'get_macro_effect', 'set_macro_effect', 'get_macros', 'delete_macro', 'add_macro', 'set_ripple_effect',
+               'set_ripple_effect_random_colour']
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src2/13038/13038-1-en-v1.png"
 
 
 class RazerHuntsmanElite(_RippleKeyboard):
@@ -1896,6 +1936,27 @@ class RazerBlackWidowV4(_RippleKeyboard):
     DEVICE_IMAGE = "https://dl.razerzone.com/src2/13219/13219-1-en-v1.png"
 
 
+class RazerBlackWidowV4X(_RippleKeyboard):
+    """
+    Class for the Razer BlackWidow V4 X
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Razer_BlackWidow_V4_X(-if01)?-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x0293
+    HAS_MATRIX = True
+    WAVE_DIRS = (1, 2)
+    MATRIX_DIMS = [6, 22]
+    METHODS = ['get_device_type_keyboard', 'set_wave_effect', 'set_wheel_effect', 'set_static_effect', 'set_spectrum_effect',
+               'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
+               'set_custom_effect', 'set_key_row', 'get_game_mode', 'set_game_mode', 'get_macro_mode', 'set_macro_mode',
+               'get_macro_effect', 'set_macro_effect', 'get_macros', 'delete_macro', 'add_macro',
+               'set_starlight_random_effect', 'set_starlight_single_effect', 'set_starlight_dual_effect',
+               'set_ripple_effect', 'set_ripple_effect_random_colour']
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src2/13223/13223-1-en-v1.png"
+
+
 class RazerBlackWidowV4Pro(_RippleKeyboard):
     """
     Class for the Razer BlackWidow V4 Pro
@@ -1917,6 +1978,44 @@ class RazerBlackWidowV4Pro(_RippleKeyboard):
                'set_ripple_effect', 'set_ripple_effect_random_colour']
 
     DEVICE_IMAGE = "https://dl.razerzone.com/src2/9703/9703-1-en-v1.png"
+
+
+class RazerBlade142023(_RippleKeyboard):
+    """
+    Class for the Razer Blade 14 (2023)
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Blade(-if01)?-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x029D
+    HAS_MATRIX = True
+    MATRIX_DIMS = [6, 16]
+    METHODS = ['get_device_type_keyboard', 'get_logo_active', 'set_logo_active', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
+               'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect',
+               'set_breath_dual_effect', 'set_custom_effect', 'set_key_row',
+               'set_starlight_random_effect', 'set_starlight_single_effect', 'set_starlight_dual_effect',
+               'set_ripple_effect', 'set_ripple_effect_random_colour']
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src2/13031/13031-1-en-v2.png"
+
+
+class RazerBlade142024(_RippleKeyboard):
+    """
+    Class for the Razer Blade 14 (2024)
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Blade(-if01)?-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x02B6
+    HAS_MATRIX = True
+    MATRIX_DIMS = [6, 16]
+    METHODS = ['get_device_type_keyboard', 'get_logo_active', 'set_logo_active', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
+               'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect',
+               'set_breath_dual_effect', 'set_custom_effect', 'set_key_row',
+               'set_starlight_random_effect', 'set_starlight_single_effect', 'set_starlight_dual_effect',
+               'set_ripple_effect', 'set_ripple_effect_random_colour']
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src2/13031/13031-1-en-v2.png"
 
 
 class RazerBlade152023(_RippleKeyboard):

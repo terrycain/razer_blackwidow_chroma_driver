@@ -45,6 +45,9 @@ The *[Startup]* section in the configuration file contains values to be used dur
 *restore_persistence* _bool_
 	This flag specifies whether effects saved in persistence.conf should be applied when the daemon starts.
 
+*persistence_dual_boot_quirk* _bool_
+	This flag specifies whether the persisted effect is applied twice to address a quirk with newer devices that were last changed by Razer Synapse on Windows. Only applicable with restore_persistence = True.
+
 # SEE ALSO
 
 *openrazer-daemon*(8)
