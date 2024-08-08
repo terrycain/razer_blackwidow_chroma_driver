@@ -1,0 +1,74 @@
+name: "Report a problem or support request"
+description: "The driver, daemon or my device isn't working as expected"
+labels: ["support"]
+body:
+  - type: input
+    id: device_name
+    attributes:
+      label: "Affected Device / PID"
+      description:
+      placeholder: "Razer BlackWidow Chroma, 1532:0203"
+    validations:
+      required: true
+
+  - type: input
+    id: distro_version
+    attributes:
+      label: "Operating System / Version"
+      placeholder: "Ubuntu 24.04"
+    validations:
+      required: true
+
+  - type: input
+    id: kernel_version
+    attributes:
+      label: "Kernel Version"
+      description: "Run 'uname -r' in a terminal."
+      placeholder: "6.8.0-39-generic"
+    validations:
+      required: true
+
+  - type: input
+    id: openrazer_version
+    attributes:
+      label: "OpenRazer Version"
+      description:
+      placeholder: "3.7.0"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: declaration
+    attributes:
+      label: "Support Checklist"
+      description: "Please check before submitting:"
+      options:
+        - label: "My user was added to the plugdev group."
+          required: true
+        - label: "I have rebooted and the problem persists."
+          required: true
+        - label: "I looked at the [Troubleshooting](https://github.com/openrazer/openrazer/wiki/Troubleshooting) page and it did not solve the problem."
+          required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Symptoms
+      description: "Do any of these apply?"
+      options:
+        - label: "Uninstalling OpenRazer fixes the problem"
+        - label: "Re-plugging the device fixes the problem"
+        - label: "It worked before a system/kernel update."
+        - label: "Only a problem if the daemon is running."
+        - label: "Only a problem from power up or a reboot."
+        - label: "I'm dual booting with Windows."
+        - label: "Intermittent or erratic problem."
+        - label: "My device is missing a feature."
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Please describe the issue"
+      description: "Include any logs (in code blocks) if necessary."
+    validations:
+      required: true

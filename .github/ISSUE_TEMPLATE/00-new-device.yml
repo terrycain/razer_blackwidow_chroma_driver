@@ -1,0 +1,85 @@
+name: "Support for a new device"
+title: "Support for Razer [name]"
+description: "Provide details to request support for a new device PID"
+labels: ["Device Support"]
+body:
+  - type: input
+    id: device_name
+    attributes:
+      label: "Device Name"
+      description: Check the sticker under the device.
+      placeholder: Razer BlackWidow Chroma
+    validations:
+      required: true
+
+  - type: input
+    id: product_number
+    attributes:
+      label: "Product Number"
+      description: Check the sticker under the device.
+      placeholder: RZ03-01220300
+    validations:
+      required: true
+
+  - type: input
+    id: model_number
+    attributes:
+      label: "Model Number"
+      description: Check the sticker under the device.
+      placeholder: RZ03-0122
+    validations:
+      required: true
+
+  - type: input
+    id: device_pid
+    attributes:
+      label: "VID:PID"
+      description: "Run 'lsusb' in a terminal. Enter the ID seen before the device name."
+      placeholder: "1532:0203"
+    validations:
+      required: true
+
+  - type: textarea
+    id: lsusb_output
+    attributes:
+      label: "USB Details"
+      description: "Paste the output of this command: lsusb -d 1532: -v"
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: sysfs_output
+    attributes:
+      label: "Device Input Paths"
+      description: "Paste the output of this command: ls -lah /dev/input/by-id/"
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: usbhid_dump_output
+    attributes:
+      label: "USB HID Dump"
+      description: "Paste the output of this command: usbhid-dump -m 1532 -ed"
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: packet_captures
+    attributes:
+      label: "Packet Captures"
+      description: "To analyse the communication and protocol required for this device. See here on capturing this: https://github.com/openrazer/openrazer/wiki/Reverse-Engineering-USB-Protocol"
+      placeholder: "Drag and drop to upload files"
+    validations:
+      required: false
+
+  - type: textarea
+    id: synapse_screenshots
+    attributes:
+      label: "Synapse Screenshots"
+      description: "Please take screenshots of all available options in Razer Synapse from a Windows environment."
+      placeholder: "Drag and drop to upload images"
+    validations:
+      required: false
