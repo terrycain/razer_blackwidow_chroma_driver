@@ -986,7 +986,7 @@ class RazerDevice(DBusService):
                 vid, pid = self.get_vid_pid()
                 idx = self._unknowns.get((vid, pid), 0)
                 self._unknowns[(vid, pid)] = idx + 1
-                serial = "UNKNOWN_%04X%04X_%04d" % (vid, pid, idx)
+                serial = "UNKNOWN_{0:04X}{1:04X}_{2:04d}".format(vid, pid, idx)
 
             self._serial = serial.replace(' ', '_')
 
