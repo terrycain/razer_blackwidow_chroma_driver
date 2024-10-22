@@ -55,6 +55,9 @@ class RazerDevice(DBusService):
         # Serial cache
         self._serial = None
 
+        # Unknown Device Tracking
+        self._unknowns = {}     # maps vid/pid to last used unique character for unknown device
+
         # Local storage key name
         self.storage_name = "UnknownDevice"
 
@@ -980,8 +983,11 @@ class RazerDevice(DBusService):
                     self.logger.debug('getting serial: {0} count:{1}'.format(serial, count))
 
             if serial == '' or serial == 'Default string' or serial == 'empty (NULL)' or serial == 'As printed in the D cover':
-                serial = "".join([i for i in os.path.basename(self._device_path) if i.isalnum()])
-
+                vid, pid = self.get_vid_pid()
+                idx = self._unknowns.get((vid,pid), 0)
+                self._unknowns[(vid,pid)] = idx + 1
+                serial = "UNKNOWN_%04X%04X_%04d" % (vid,pid,idx)
+                
             self._serial = serial.replace(' ', '_')
 
         return self._serial
