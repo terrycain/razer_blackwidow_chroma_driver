@@ -984,10 +984,10 @@ class RazerDevice(DBusService):
 
             if serial == '' or serial == 'Default string' or serial == 'empty (NULL)' or serial == 'As printed in the D cover':
                 vid, pid = self.get_vid_pid()
-                idx = self._unknowns.get((vid,pid), 0)
-                self._unknowns[(vid,pid)] = idx + 1
-                serial = "UNKNOWN_%04X%04X_%04d" % (vid,pid,idx)
-                
+                idx = self._unknowns.get((vid, pid), 0)
+                self._unknowns[(vid, pid)] = idx + 1
+                serial = "UNKNOWN_%04X%04X_%04d" % (vid, pid, idx)
+
             self._serial = serial.replace(' ', '_')
 
         return self._serial
