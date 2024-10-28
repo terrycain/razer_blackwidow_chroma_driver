@@ -68,7 +68,7 @@ class RazerMacro(object):
     def del_macro(self, bind_key: str):
         key_map = keyboard.KEY_MAPPING
         map_str = "keyboard.KEY_MAPPING"
-        if self.name in ["Razer Orbweaver", "Razer Orbweaver Chroma", "Razer Tartarus V2", "Razer Tartarus Chroma V2"]:
+        if self.name in ["Razer Orbweaver", "Razer Orbweaver Chroma", "Razer Tartarus V2", "Razer Tartarus Chroma V2", "Razer Tartarus Pro"]:
             key_map = keyboard.ORBWEAVER_KEY_MAPPING
             map_str = "keyboard.ORBWEAVER_KEY_MAPPING"
         elif self.name in ["Razer Tartarus", "Razer Tartarus Chroma", "Razer Nostromo"]:

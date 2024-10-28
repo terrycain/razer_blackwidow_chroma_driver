@@ -233,6 +233,49 @@ class RazerTartarusV2(_RippleKeyboard):
         # self.key_manager.close()
 
 
+class RazerTartarusPro(_RippleKeyboard):
+    """
+    Class for Razer Tartarus Pro
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Tartarus_Pro(-if01)?-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x0244
+    HAS_MATRIX = True
+    DEDICATED_MACRO_KEYS = True
+    MATRIX_DIMS = [4, 6]
+
+    METHODS = ['get_device_type_keypad',
+               'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
+               'set_key_row',
+               'set_reactive_effect',
+               'set_none_effect',
+               'set_custom_effect',
+               'set_wave_effect',
+               'set_static_effect',
+               'set_spectrum_effect',
+               'set_starlight_random_effect', 'set_starlight_single_effect', 'set_starlight_dual_effect',
+               'keypad_get_profile_led_red', 'keypad_set_profile_led_red',
+               'keypad_get_profile_led_green', 'keypad_set_profile_led_green',
+               'keypad_get_profile_led_blue', 'keypad_set_profile_led_blue',
+               'get_macros', 'delete_macro', 'add_macro',
+               'set_ripple_effect', 'set_ripple_effect_random_colour',
+               'keypad_get_mode_modifier', 'keypad_set_mode_modifier']
+
+    DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/1591/1591_tartaruspro.png"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _close(self):
+        """
+        Close the key manager
+        """
+        super()._close()
+
+        # self.key_manager.close()
+
+
 class RazerOrbweaver(_RazerDeviceBrightnessSuspend):
     """
     Class for the Razer Orbweaver

@@ -36,6 +36,15 @@ struct razer_report razer_chroma_standard_set_led_brightness(unsigned char varia
 struct razer_report razer_chroma_standard_get_led_brightness(unsigned char variable_storage, unsigned char led_id);
 
 /*
+ * Tartarus V2 LED Functions, three lights have eight states in total.
+ *
+ * Class 0x0F
+ * Trans 0x1F
+ */
+struct razer_report razer_chroma_tartarus_set_led_state(struct razer_rgb *rgb);
+struct razer_report razer_chroma_tartarus_get_led_state(void);
+
+/*
  * Standard Matrix Effects Functions
  */
 struct razer_report razer_chroma_standard_matrix_effect_none(void);

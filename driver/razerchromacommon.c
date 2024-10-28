@@ -202,6 +202,50 @@ struct razer_report razer_chroma_standard_get_led_brightness(unsigned char varia
 }
 
 /*
+ * Set (three) LED states of Tartarus Pro deivce.
+ * The @param led_state should be fetched by `_get_led_state`, and can only contains either on (0xFF) or off (0x00) for each LED.
+ * NOSTORE.
+ *
+ * Status Trans Packet Proto DataSize Class CMD Args
+ * 00     1f    0000   00    09       0f    02  010b0100010100ff00 | (? 0x010b01000101, RGB 0x00ff00)
+ */
+struct razer_report razer_chroma_tartarus_set_led_state(struct razer_rgb *rgb)
+{
+    struct razer_report report = get_razer_report(0x0F, 0x02, 9);
+    report.arguments[0] = 0x01;
+    report.arguments[1] = 0x0B;
+    report.arguments[2] = 0x01;
+    report.arguments[3] = 0x00;
+    report.arguments[4] = 0x01;
+    report.arguments[5] = 0x01;
+    report.arguments[6] = rgb->r ? 0xFF : 0x00;
+    report.arguments[7] = rgb->g ? 0xFF : 0x00;
+    report.arguments[8] = rgb->b ? 0xFF : 0x00;
+
+    return report;
+}
+
+/*
+ * Get (three) LED states of Tartarus Pro device.
+ * Result is returned in last three bytes as RGB.
+ *
+ * Status Trans Packet Proto DataSize Class CMD Args
+ * 00     1f    0000   00    09       0f    82  010b0100010100ff00 | (? 0x010b01000101, RGB 0x00ff00)
+ */
+struct razer_report razer_chroma_tartarus_get_led_state(void)
+{
+    struct razer_report report = get_razer_report(0x0F, 0x82, 9);
+    report.arguments[0] = 0x01;
+    report.arguments[1] = 0x0B;
+    report.arguments[2] = 0x01;
+    report.arguments[3] = 0x00;
+    report.arguments[4] = 0x01;
+    report.arguments[5] = 0x01;
+
+    return report;
+}
+
+/*
  * Standard Matrix Effects Functions
  */
 
