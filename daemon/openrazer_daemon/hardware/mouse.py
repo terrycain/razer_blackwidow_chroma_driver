@@ -384,7 +384,6 @@ class RazerNagaHexV2(__RazerDevice):
     USB_VID = 0x1532
     USB_PID = 0x0050
     HAS_MATRIX = True
-    DEDICATED_MACRO_KEYS = True
     MATRIX_DIMS = [1, 3]
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_poll_rate', 'set_poll_rate',
                'get_logo_brightness', 'set_logo_brightness', 'get_scroll_brightness', 'set_scroll_brightness',
@@ -411,7 +410,6 @@ class RazerNaga(__RazerDevice):
 
     USB_VID = 0x1532
     USB_PID = 0x0015
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy_byte', 'set_dpi_xy_byte', 'get_poll_rate', 'set_poll_rate',
                'set_logo_none', 'set_logo_on', 'set_scroll_none', 'set_scroll_on', 'set_backlight_none', 'set_backlight_on']
 
@@ -428,7 +426,6 @@ class RazerNaga2012(__RazerDevice):
 
     USB_VID = 0x1532
     USB_PID = 0x002E
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy_byte', 'set_dpi_xy_byte', 'get_poll_rate', 'set_poll_rate',
                'set_logo_none', 'set_logo_on', 'set_scroll_none', 'set_scroll_on', 'set_backlight_none', 'set_backlight_on']
 
@@ -446,7 +443,6 @@ class RazerNagaChroma(__RazerDevice):
     USB_VID = 0x1532
     USB_PID = 0x0053
     HAS_MATRIX = True
-    DEDICATED_MACRO_KEYS = True
     MATRIX_DIMS = [1, 3]
     METHODS = ['get_device_type_mouse', 'get_dpi_xy', 'set_dpi_xy', 'max_dpi',
                'get_poll_rate', 'set_poll_rate',
@@ -476,7 +472,6 @@ class RazerNagaTrinity(__RazerDevice):
     USB_VID = 0x1532
     USB_PID = 0x0067
     HAS_MATRIX = False  # TODO Device supports matrix, driver missing
-    DEDICATED_MACRO_KEYS = True
     # MATRIX_DIMS = [1, 3]
     METHODS = ['get_device_type_mouse', 'get_dpi_xy', 'set_dpi_xy', 'get_poll_rate', 'set_poll_rate',
                'get_brightness', 'set_brightness', 'set_static_effect', 'max_dpi']
@@ -494,7 +489,6 @@ class RazerNagaHex(__RazerDevice):
 
     USB_VID = 0x1532
     USB_PID = 0x0041
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy_byte', 'set_dpi_xy_byte', 'get_poll_rate', 'set_poll_rate',
                'set_logo_none', 'set_logo_on', 'set_scroll_none', 'set_scroll_on']
 
@@ -511,7 +505,6 @@ class RazerNagaHexRed(__RazerDevice):
 
     USB_VID = 0x1532
     USB_PID = 0x0036
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy_byte', 'set_dpi_xy_byte', 'get_poll_rate', 'set_poll_rate',
                'set_logo_none', 'set_logo_on', 'set_scroll_none', 'set_scroll_on']
 
@@ -528,7 +521,6 @@ class RazerTaipan(__RazerDevice):
 
     USB_VID = 0x1532
     USB_PID = 0x0034
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_poll_rate', 'set_poll_rate',
                'set_logo_none', 'set_logo_on', 'set_scroll_none', 'set_scroll_on']
 
@@ -585,7 +577,6 @@ class RazerDeathAdder3_5G(__RazerDevice):
     """
     USB_VID = 0x1532
     USB_PID = 0x0016
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse',
                'get_poll_rate', 'set_poll_rate', 'get_dpi_xy', 'set_dpi_xy', 'available_dpi', 'max_dpi',
                'set_logo_none', 'set_logo_on', 'set_scroll_none', 'set_scroll_on']
@@ -602,7 +593,6 @@ class RazerDeathAdder3_5GBlack(__RazerDevice):
     """
     USB_VID = 0x1532
     USB_PID = 0x0029
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse',
                'get_poll_rate', 'set_poll_rate', 'get_dpi_xy', 'set_dpi_xy', 'available_dpi', 'max_dpi']
 
@@ -686,7 +676,6 @@ class RazerNaga2014(__RazerDevice):
 
     USB_VID = 0x1532
     USB_PID = 0x0040
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_poll_rate', 'set_poll_rate',
                'set_logo_none', 'set_logo_on', 'set_scroll_none', 'set_scroll_on', 'set_backlight_none', 'set_backlight_on']
 
@@ -902,8 +891,6 @@ class RazerNagaLeftHanded2020(__RazerDevice):
     HAS_MATRIX = True
     WAVE_DIRS = (1, 2)
     MATRIX_DIMS = [1, 3]
-
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy',
                'get_poll_rate', 'set_poll_rate',
                # Logo
@@ -932,8 +919,6 @@ class RazerNagaProWired(__RazerDeviceBrightnessSuspend):
     HAS_MATRIX = True
     WAVE_DIRS = (1, 2)
     MATRIX_DIMS = [1, 3]
-
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_poll_rate', 'set_poll_rate', 'get_dpi_stages', 'set_dpi_stages',
                # Battery
                'get_battery', 'is_charging', 'get_idle_time', 'set_idle_time', 'get_low_battery_threshold', 'set_low_battery_threshold',
@@ -1009,7 +994,6 @@ class RazerBasiliskEssential(__RazerDevice):
     USB_PID = 0x0065
     HAS_MATRIX = True
     MATRIX_DIMS = [1, 1]
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_dpi_stages', 'set_dpi_stages', 'get_poll_rate', 'set_poll_rate',
                # Logo
                'get_logo_brightness', 'set_logo_brightness', 'set_logo_spectrum', 'set_logo_reactive', 'set_logo_breath_random', 'set_logo_breath_single', 'set_logo_breath_dual', 'set_logo_static', 'set_logo_none',
@@ -1269,8 +1253,6 @@ class RazerNagaX(__RazerDevice):
     HAS_MATRIX = True
     WAVE_DIRS = (1, 2)
     MATRIX_DIMS = [1, 2]
-
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy',
                'get_dpi_stages', 'set_dpi_stages',
                'get_poll_rate', 'set_poll_rate',
@@ -1444,7 +1426,6 @@ class RazerNagaEpic(__RazerDevice):
 
     USB_VID = 0x1532
     USB_PID = 0x001F
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy_byte', 'set_dpi_xy_byte', 'get_poll_rate', 'set_poll_rate',
                'get_scroll_brightness', 'set_scroll_brightness', 'set_scroll_none', 'set_scroll_static', 'set_scroll_spectrum',
                'get_battery', 'is_charging', 'get_idle_time', 'set_idle_time', 'get_low_battery_threshold', 'set_low_battery_threshold']

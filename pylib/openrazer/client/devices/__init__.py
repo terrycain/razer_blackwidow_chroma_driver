@@ -34,7 +34,6 @@ class RazerDevice(object):
         self._type = str(self._dbus_interfaces['device'].getDeviceType())
         self._fw = str(self._dbus_interfaces['device'].getFirmware())
         self._drv_version = str(self._dbus_interfaces['device'].getDriverVersion())
-        self._has_dedicated_macro = None
         self._device_image = None
 
         # Deprecated API, but kept for backwards compatibility
@@ -426,19 +425,6 @@ class RazerDevice(object):
         :rtype: dict
         """
         return self._capabilities
-
-    @property
-    def dedicated_macro(self) -> bool:
-        """
-        Device has dedicated macro keys
-
-        :return: If the device has macro keys
-        :rtype: bool
-        """
-        if self._has_dedicated_macro is None:
-            self._has_dedicated_macro = self._dbus_interfaces['device'].hasDedicatedMacroKeys()
-
-        return self._has_dedicated_macro
 
     @property
     def device_image(self) -> str:

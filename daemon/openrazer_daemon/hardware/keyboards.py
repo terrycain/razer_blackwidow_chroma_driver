@@ -99,7 +99,6 @@ class RazerNostromo(_RazerDeviceBrightnessSuspend):
 
     USB_VID = 0x1532
     USB_PID = 0x0111
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keypad', 'keypad_get_profile_led_red', 'keypad_set_profile_led_red', 'keypad_get_profile_led_green', 'keypad_set_profile_led_green', 'keypad_get_profile_led_blue', 'keypad_set_profile_led_blue']
 
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/564/564_tartarus_classic.png"
@@ -113,7 +112,6 @@ class RazerTartarus(_RazerDeviceBrightnessSuspend):
 
     USB_VID = 0x1532
     USB_PID = 0x0201
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keypad',
                'set_static_effect', 'bw_set_pulsate', 'keypad_get_profile_led_red', 'keypad_set_profile_led_red', 'keypad_get_profile_led_green',
                'keypad_set_profile_led_green', 'keypad_get_profile_led_blue', 'keypad_set_profile_led_blue']
@@ -129,7 +127,6 @@ class RazerTartarusChroma(_RazerDeviceBrightnessSuspend):
 
     USB_VID = 0x1532
     USB_PID = 0x0208
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keypad', 'set_breath_random_effect', 'set_breath_single_effect',
                'set_breath_dual_effect', 'set_none_effect', 'set_static_effect', 'set_spectrum_effect', 'keypad_get_profile_led_red', 'keypad_set_profile_led_red', 'keypad_get_profile_led_green',
                'keypad_set_profile_led_green', 'keypad_get_profile_led_blue', 'keypad_set_profile_led_blue']
@@ -146,7 +143,6 @@ class RazerTartarusV2(_RippleKeyboard):
     USB_VID = 0x1532
     USB_PID = 0x022B
     HAS_MATRIX = True
-    DEDICATED_MACRO_KEYS = True
     MATRIX_DIMS = [4, 6]
 
     METHODS = ['get_device_type_keypad',
@@ -177,7 +173,6 @@ class RazerOrbweaver(_RazerDeviceBrightnessSuspend):
 
     USB_VID = 0x1532
     USB_PID = 0x0113
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keypad',
                'keypad_get_profile_led_red', 'keypad_set_profile_led_red', 'keypad_get_profile_led_green', 'keypad_set_profile_led_green', 'keypad_get_profile_led_blue', 'keypad_set_profile_led_blue',
                'set_none_effect', 'bw_set_pulsate', 'bw_set_static']
@@ -194,7 +189,6 @@ class RazerOrbweaverChroma(_RippleKeyboard):
 
     USB_VID = 0x1532
     USB_PID = 0x0207
-    DEDICATED_MACRO_KEYS = True
     HAS_MATRIX = True
     MATRIX_DIMS = [5, 22]
     METHODS = ['get_device_type_keypad',
@@ -217,7 +211,6 @@ class RazerBlackWidowUltimate2012(_MacroKeyboard):
 
     USB_VID = 0x1532
     USB_PID = 0x010D
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keyboard', 'get_game_mode', 'set_game_mode', 'set_macro_mode', 'get_macro_mode',
                'get_macro_effect', 'set_macro_effect', 'bw_set_pulsate', 'bw_set_static']
 
@@ -232,7 +225,6 @@ class RazerBlackWidowStealth(_MacroKeyboard):
 
     USB_VID = 0x1532
     USB_PID = 0x011B
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keyboard', 'get_game_mode', 'set_game_mode', 'set_macro_mode', 'get_macro_mode',
                'get_macro_effect', 'set_macro_effect', 'bw_set_pulsate', 'bw_set_static']
 
@@ -247,7 +239,6 @@ class RazerBlackWidowStealthEdition(_MacroKeyboard):
 
     USB_VID = 0x1532
     USB_PID = 0x010E
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keyboard', 'get_game_mode', 'set_game_mode', 'set_macro_mode', 'get_macro_mode',
                'get_macro_effect', 'set_macro_effect', 'bw_set_pulsate', 'bw_set_static']
 
@@ -262,7 +253,6 @@ class RazerBlackWidowUltimate2013(_MacroKeyboard):
 
     USB_VID = 0x1532
     USB_PID = 0x011A
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keyboard', 'get_game_mode', 'set_game_mode', 'set_macro_mode', 'get_macro_mode',
                'get_macro_effect', 'set_macro_effect', 'bw_set_pulsate', 'bw_set_static']
 
@@ -336,7 +326,6 @@ class RazerBlackWidowChroma(_RippleKeyboard):
     USB_VID = 0x1532
     USB_PID = 0x0203
     HAS_MATRIX = True
-    DEDICATED_MACRO_KEYS = True
     MATRIX_DIMS = [6, 22]
     METHODS = ['get_device_type_keyboard', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
                'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
@@ -357,7 +346,6 @@ class RazerBlackWidowChromaV2(_RippleKeyboard):
     USB_VID = 0x1532
     USB_PID = 0x0221
     HAS_MATRIX = True
-    DEDICATED_MACRO_KEYS = True
     MATRIX_DIMS = [6, 22]
     METHODS = ['get_device_type_keyboard', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
                'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
@@ -1097,7 +1085,6 @@ class RazerAnansi(_MacroKeyboard):
 
     USB_VID = 0x1532
     USB_PID = 0x010F
-    DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_keyboard',
                'get_game_mode', 'set_game_mode', 'get_macro_mode', 'set_macro_mode', 'get_macro_effect',
                'set_macro_effect', 'set_static_effect',
@@ -1143,7 +1130,6 @@ class RazerDeathStalkerChroma(_RippleKeyboard):
     USB_VID = 0x1532
     USB_PID = 0x0204
     HAS_MATRIX = True
-    DEDICATED_MACRO_KEYS = True
     MATRIX_DIMS = [1, 12]
     METHODS = ['get_device_type_keyboard', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
                'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
@@ -1240,7 +1226,6 @@ class RazerBlackWidowChromaOverwatch(_RippleKeyboard):
     USB_VID = 0x1532
     USB_PID = 0x0211
     HAS_MATRIX = True
-    DEDICATED_MACRO_KEYS = True
     MATRIX_DIMS = [6, 22]
     METHODS = ['get_device_type_keyboard', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
                'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',

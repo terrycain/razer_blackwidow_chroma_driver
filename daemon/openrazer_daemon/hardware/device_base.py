@@ -36,7 +36,6 @@ class RazerDevice(DBusService):
     USB_VID = None
     USB_PID = None
     HAS_MATRIX = False
-    DEDICATED_MACRO_KEYS = False
     MATRIX_DIMS = None
     POLL_RATES = None
     DPI_MAX = None
@@ -149,7 +148,6 @@ class RazerDevice(DBusService):
             ('razer.device.misc', 'resumeDevice', self.resume_device, None, None),
             ('razer.device.misc', 'getVidPid', self.get_vid_pid, None, 'ai'),
             ('razer.device.misc', 'getDriverVersion', openrazer_daemon.dbus_services.dbus_methods.version, None, 's'),
-            ('razer.device.misc', 'hasDedicatedMacroKeys', self.dedicated_macro_keys, None, 'b'),
             # Deprecated API, but kept for backwards compatibility
             ('razer.device.misc', 'getRazerUrls', self.get_image_json, None, 's'),
 
@@ -345,15 +343,6 @@ class RazerDevice(DBusService):
         payload.extend(args)
 
         self.notify_observers(tuple(payload))
-
-    def dedicated_macro_keys(self):
-        """
-        Returns if the device has dedicated macro keys
-
-        :return: Macro keys
-        :rtype: bool
-        """
-        return self.DEDICATED_MACRO_KEYS
 
     def restore_dpi_poll_rate(self):
         """
