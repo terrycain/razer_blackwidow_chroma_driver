@@ -63,13 +63,11 @@ class RazerDevice(object):
             'get_low_battery_threshold': self._has_feature('razer.device.power', 'getLowBatteryThreshold'),
             'set_low_battery_threshold': self._has_feature('razer.device.power', 'setLowBatteryThreshold'),
 
-            'macro_logic': self._has_feature('razer.device.macro'),
             'keyboard_layout': self._has_feature('razer.device.misc', 'getKeyboardLayout'),
             'game_mode_led': self._has_feature('razer.device.led.gamemode'),
             'keyswitch_optimization': self._has_feature('razer.device.misc.keyswitchoptimization', ('getKeyswitchOptimization', 'setKeyswitchOptimization')),
             'macro_mode_led': self._has_feature('razer.device.led.macromode', 'setMacroMode'),
             'macro_mode_led_effect': self._has_feature('razer.device.led.macromode', 'setMacroEffect'),
-            'macro_mode_modifier': self._has_feature('razer.device.macro', 'setModeModifier'),
             'reactive_trigger': self._has_feature('razer.device.misc', 'triggerReactive'),
 
             'poll_rate': self._has_feature('razer.device.misc', ('getPollRate', 'setPollRate')),

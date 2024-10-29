@@ -395,27 +395,12 @@ class RazerNagaHexV2(__RazerDevice):
                'set_logo_static', 'set_logo_spectrum', 'set_logo_none', 'set_logo_reactive', 'set_logo_breath_random', 'set_logo_breath_single', 'set_logo_breath_dual',
                # Scroll wheel
                'set_scroll_static', 'set_scroll_spectrum', 'set_scroll_none', 'set_scroll_reactive', 'set_scroll_breath_random', 'set_scroll_breath_single', 'set_scroll_breath_dual',
-               # #Macros
-               'get_macros', 'delete_macro', 'add_macro',
                # Can set Logo, Scroll and thumbgrid with custom
                'set_custom_effect', 'set_key_row']
 
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/715/715_nagahexv2_500x500.png"
 
     DPI_MAX = 16000
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # self.key_manager = _NagaHexV2KeyManager(self._device_number, self.event_files, self, use_epoll=True, testing=self._testing, should_grab_event_files=True)
-
-    def _close(self):
-        """
-        Close the key manager
-        """
-        super()._close()
-
-        # self.key_manager.close()
 
 
 class RazerNaga(__RazerDevice):
@@ -474,27 +459,12 @@ class RazerNagaChroma(__RazerDevice):
                'set_logo_static', 'set_logo_spectrum', 'set_logo_none', 'set_logo_reactive', 'set_logo_breath_random', 'set_logo_breath_single', 'set_logo_breath_dual',
                # Scroll wheel
                'set_scroll_static', 'set_scroll_spectrum', 'set_scroll_none', 'set_scroll_reactive', 'set_scroll_breath_random', 'set_scroll_breath_single', 'set_scroll_breath_dual',
-               # #Macros
-               'get_macros', 'delete_macro', 'add_macro',
                # Can set Logo, Scroll and thumbgrid with custom
                'set_custom_effect', 'set_key_row']
 
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/636/636_naga_chroma.png"
 
     DPI_MAX = 16000
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # self.key_manager = _NagaHexV2KeyManager(self._device_number, self.event_files, self, use_epoll=True, testing=self._testing, should_grab_event_files=True)
-
-    def _close(self):
-        """
-        Close the key manager
-        """
-        super()._close()
-
-        # self.key_manager.close()
 
 
 class RazerNagaTrinity(__RazerDevice):
@@ -514,19 +484,6 @@ class RazerNagaTrinity(__RazerDevice):
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/1251/1251_razer_naga_trinity.png"
 
     DPI_MAX = 16000
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # self.key_manager = _NagaHexV2KeyManager(self._device_number, self.event_files, self, use_epoll=True, testing=self._testing, should_grab_event_files=True)
-
-    def _close(self):
-        """
-        Close the key manager
-        """
-        super()._close()
-
-        # self.key_manager.close()
 
 
 class RazerNagaHex(__RazerDevice):
@@ -949,8 +906,6 @@ class RazerNagaLeftHanded2020(__RazerDevice):
     DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy',
                'get_poll_rate', 'set_poll_rate',
-               # Macros
-               'get_macros', 'delete_macro', 'add_macro',
                # Logo
                'get_logo_brightness', 'set_logo_brightness',
                'set_logo_wave', 'set_logo_static', 'set_logo_spectrum', 'set_logo_none', 'set_logo_reactive', 'set_logo_breath_random', 'set_logo_breath_single', 'set_logo_breath_dual',
@@ -980,8 +935,6 @@ class RazerNagaProWired(__RazerDeviceBrightnessSuspend):
 
     DEDICATED_MACRO_KEYS = True
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_poll_rate', 'set_poll_rate', 'get_dpi_stages', 'set_dpi_stages',
-               # Macros
-               'get_macros', 'delete_macro', 'add_macro',
                # Battery
                'get_battery', 'is_charging', 'get_idle_time', 'set_idle_time', 'get_low_battery_threshold', 'set_low_battery_threshold',
                # Logo
@@ -1321,8 +1274,6 @@ class RazerNagaX(__RazerDevice):
     METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy',
                'get_dpi_stages', 'set_dpi_stages',
                'get_poll_rate', 'set_poll_rate',
-               # Macros
-               'get_macros', 'delete_macro', 'add_macro',
                # Scroll wheel
                'get_scroll_brightness', 'set_scroll_brightness',
                'set_scroll_wave', 'set_scroll_static', 'set_scroll_spectrum', 'set_scroll_none', 'set_scroll_reactive', 'set_scroll_breath_random', 'set_scroll_breath_single', 'set_scroll_breath_dual',

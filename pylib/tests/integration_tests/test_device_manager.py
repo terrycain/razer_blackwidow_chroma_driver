@@ -300,47 +300,6 @@ class DeviceManagerTest(unittest.TestCase):
 
         self.assertEqual(binary, custom_effect_payload)
 
-    def test_device_keyboard_macro_enable(self):
-        device = self.device_manager.devices[0]
-
-        device.macro.enable_macros()
-
-        self.assertEqual(self._bw_chroma.get('macro_keys'), '1')
-
-    def test_device_keyboard_macro_add(self):
-        device = self.device_manager.devices[0]
-
-        url_macro = device.macro.create_url_macro_item('http://example.org')
-        device.macro.add_macro('M1', [url_macro])
-
-        macros = device.macro.get_macros()
-        self.assertIn('M1', macros)
-
-        with self.assertRaises(ValueError):
-            device.macro.add_macro('M6', url_macro)  # Unknown key
-
-        with self.assertRaises(ValueError):
-            device.macro.add_macro('M1', 'lalala')  # Not a sequnce
-
-        with self.assertRaises(ValueError):
-            device.macro.add_macro('M1', ['lalala'])  # Bad element in sequence
-
-    def test_device_keyboard_macro_del(self):
-        device = self.device_manager.devices[0]
-
-        url_macro = device.macro.create_url_macro_item('http://example.org')
-        device.macro.add_macro('M2', [url_macro])
-
-        macros = device.macro.get_macros()
-        self.assertIn('M2', macros)
-
-        device.macro.del_macro('M2')
-        macros = device.macro.get_macros()
-        self.assertNotIn('M2', macros)
-
-        with self.assertRaises(ValueError):
-            device.macro.del_macro('M6')  # Unknown key
-
 
 if __name__ == "__main__":
     unittest.main()
