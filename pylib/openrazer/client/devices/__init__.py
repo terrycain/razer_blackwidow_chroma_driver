@@ -4,7 +4,6 @@ import json
 import dbus as _dbus
 from openrazer.client.fx import RazerFX as _RazerFX
 from xml.etree import ElementTree as _ET
-from openrazer.client.macro import RazerMacro as _RazerMacro
 from openrazer.client import constants as _c
 
 
@@ -13,7 +12,6 @@ class RazerDevice(object):
     Raw razer base device
     """
     _FX = _RazerFX
-    _MACRO_CLASS = _RazerMacro
 
     def __init__(self, serial, vid_pid=None, daemon_dbus=None):
         # Load up the DBus
@@ -236,16 +234,6 @@ class RazerDevice(object):
             self.fx = None
         else:
             self.fx = self._FX(serial, capabilities=self._capabilities, daemon_dbus=daemon_dbus, matrix_dims=self._matrix_dimensions)
-
-        # Setup Macro
-        if self.has('macro_logic'):
-            if self._MACRO_CLASS is not None:
-                self.macro = self._MACRO_CLASS(serial, self.name, daemon_dbus=daemon_dbus, capabilities=self._capabilities)
-            else:
-                self._capabilities['macro_logic'] = False
-                self.macro = None
-        else:
-            self.macro = None
 
         if self.has('dpi'):
             self._dbus_interfaces['dpi'] = _dbus.Interface(self._dbus, "razer.device.dpi")
