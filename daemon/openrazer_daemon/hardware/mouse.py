@@ -1008,6 +1008,43 @@ class RazerNagaProWireless(RazerNagaProWired):
     METHODS = RazerNagaProWired.METHODS + ['set_charge_effect', 'set_charge_colour']
 
 
+class RazerNagaV2ProWired(__RazerDeviceBrightnessSuspend):
+    """
+    Class for the Razer Naga V2 Pro (Wired)
+    """
+    USB_VID = 0x1532
+    USB_PID = 0x00A7
+    HAS_MATRIX = True
+    WAVE_DIRS = (1, 2)
+    MATRIX_DIMS = [1, 3]
+
+    DEDICATED_MACRO_KEYS = True
+    METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_poll_rate', 'set_poll_rate', 'get_dpi_stages', 'set_dpi_stages',
+               # Macros
+               'get_macros', 'delete_macro', 'add_macro',
+               # Battery
+               'get_battery', 'is_charging', 'get_idle_time', 'set_idle_time', 'get_low_battery_threshold', 'set_low_battery_threshold',
+               # Logo
+               'get_logo_brightness', 'set_logo_brightness',
+               'set_logo_wave', 'set_logo_static', 'set_logo_spectrum', 'set_logo_none', 'set_logo_reactive', 'set_logo_breath_random', 'set_logo_breath_single', 'set_logo_breath_dual',
+               # Thumbgrid
+               'set_static_effect', 'set_spectrum_effect', 'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
+               # Custom frame
+               'set_custom_effect', 'set_key_row']
+
+    DPI_MAX = 30000
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src2/6292/6292-1-en-v1.png"
+
+
+class RazerNagaV2ProWireless(RazerNagaV2ProWired):
+    """
+    Class for the Razer Naga V2 Pro (Wireless)
+    """
+    USB_PID = 0x00A8
+    METHODS = RazerNagaV2ProWired.METHODS + ['set_charge_effect', 'set_charge_colour']
+
+
 class RazerDeathAdder1800(__RazerDevice):
     """
     Class for the Razer DeathAdder 1800

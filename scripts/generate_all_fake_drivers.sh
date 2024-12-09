@@ -4,7 +4,7 @@ set -e
 
 if [ "$1" = "-f" ]; then
     echo "Removing existing fake driver files..."
-    rm $(dirname "$0")/../pylib/openrazer/_fake_driver/*.cfg
+    rm -f $(dirname "$0")/../pylib/openrazer/_fake_driver/*.cfg
 fi
 
 drivers=$(ls driver/razer*_driver.c | cut -d'/' -f2 | cut -d'_' -f1)
