@@ -1709,6 +1709,41 @@ class RazerBasiliskV3Pro35KWireless(RazerBasiliskV3Pro35KWired):
     USB_PID = 0x00CD
 
 
+class RazerBasiliskV3_35K(__RazerDevice):
+    """
+    Class for the Razer Basilisk V3 35K
+    """
+
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Basilisk_V3_35K_000000000000-if0(1|2)-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x00CB
+    HAS_MATRIX = True
+    MATRIX_DIMS = [1, 13]
+    METHODS = ['get_device_type_mouse',
+               'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_dpi_stages', 'set_dpi_stages',
+               'get_poll_rate', 'set_poll_rate',
+               'get_brightness', 'set_brightness',
+               'get_logo_brightness', 'set_logo_brightness',
+               'get_scroll_brightness', 'set_scroll_brightness',
+               # Scroll wheel controls
+               'get_scroll_mode', 'set_scroll_mode',
+               'get_scroll_acceleration', 'set_scroll_acceleration',
+               'get_scroll_smart_reel', 'set_scroll_smart_reel',
+               # All LEDs (partial support)
+               'set_static_effect', 'set_wave_effect', 'set_spectrum_effect', 'set_none_effect',
+               # Logo (partial support)
+               'set_logo_wave', 'set_logo_static', 'set_logo_spectrum', 'set_logo_none',
+               # Scroll wheel (partial support)
+               'set_scroll_wave', 'set_scroll_static', 'set_scroll_spectrum', 'set_scroll_none',
+               # Can set custom matrix effects
+               'set_custom_effect', 'set_key_row']
+
+    DEVICE_IMAGE = "https://hybrismediaprod.blob.core.windows.net/sys-master-phoenix-images-container/he4/h63/9822107926558/basilisk-v3-35k-2-500x500.png"
+
+    DPI_MAX = 35000
+
+
 class RazerHyperPollingWirelessDongle(__RazerDevice):
     """
     Class for the Razer HyperPolling Wireless Dongle
