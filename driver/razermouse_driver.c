@@ -5109,8 +5109,12 @@ static int razer_mouse_probe(struct hid_device *hdev, const struct hid_device_id
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_custom_frame);
             break;
 
-        case USB_DEVICE_ID_RAZER_BASILISK_V3:
         case USB_DEVICE_ID_RAZER_BASILISK_V3_35K:
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_logo_matrix_effect_none);
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_scroll_matrix_effect_none);
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_none);
+            fallthrough;
+        case USB_DEVICE_ID_RAZER_BASILISK_V3:
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_poll_rate);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_dpi);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_dpi_stages);
@@ -5122,19 +5126,16 @@ static int razer_mouse_probe(struct hid_device *hdev, const struct hid_device_id
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_tilt_repeat);
 
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_logo_led_brightness);
-            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_logo_matrix_effect_none);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_logo_matrix_effect_wave);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_logo_matrix_effect_spectrum);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_logo_matrix_effect_static);
 
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_scroll_led_brightness);
-            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_scroll_matrix_effect_none);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_scroll_matrix_effect_wave);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_scroll_matrix_effect_spectrum);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_scroll_matrix_effect_static);
 
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_brightness);
-            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_none);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_wave);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_spectrum);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_static);
