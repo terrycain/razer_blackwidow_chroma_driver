@@ -581,8 +581,9 @@ class RazerHuntsmanV3Pro(_RazerDeviceBrightnessSuspend):
     # TODO Remove get_keyboard_layout once not _RazerDeviceBrightnessSuspend anymore
     METHODS = ['get_device_type_keyboard', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
                'set_reactive_effect', 'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
-               'get_macro_mode', 'set_macro_mode', 'get_macro_effect', 'set_macro_effect', 'get_game_mode', 'set_game_mode',
-               'set_custom_effect', 'set_key_row', 'get_keyboard_layout']
+               'set_starlight_random_effect', 'set_starlight_single_effect', 'set_starlight_dual_effect', 
+               'get_macro_mode', 'set_macro_mode', 'get_macro_effect', 'set_macro_effect', 
+               'get_game_mode', 'set_game_mode','set_custom_effect', 'set_key_row', 'get_keyboard_layout']
 
     DEVICE_IMAGE = "https://dl.razerzone.com/src2/13671/13671-1-en-v2.png"
 
