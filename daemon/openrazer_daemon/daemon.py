@@ -495,7 +495,7 @@ class RazerDaemon(DBusService):
                                                 persistence=self._persistence, testing=self._test_dir is not None,
                                                 additional_interfaces=sorted(additional_interfaces),
                                                 additional_methods=[],
-                                                unknown_serial_counter = self._unknown_serial_counter)
+                                                unknown_serial_counter=self._unknown_serial_counter)
 
                     # Wireless devices sometimes don't listen
                     count = 0
@@ -534,7 +534,7 @@ class RazerDaemon(DBusService):
                 razer_device = device_class(device_path=sys_path, device_number=device_number, config=self._config,
                                             persistence=self._persistence, testing=self._test_dir is not None,
                                             additional_interfaces=None, additional_methods=[],
-                                            unknown_serial_counter = self._unknown_serial_counter)
+                                            unknown_serial_counter=self._unknown_serial_counter)
 
                 # Its a udev event so currently the device hasn't been chmodded yet
                 time.sleep(0.2)
