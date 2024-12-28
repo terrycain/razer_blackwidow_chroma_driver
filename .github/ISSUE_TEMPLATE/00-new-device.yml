@@ -3,6 +3,29 @@ title: "Support for Razer [name]"
 description: "Provide details to request support for a new device PID"
 labels: ["Device Support"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        👆 Please substitute the device name in the title above.
+
+        ## Before you continue...
+
+          [🔍 Search for existing issues and pull requests](https://github.com/openrazer/openrazer/issues?q=label%3A%22Device+Support%22) by searching for your USB PID. Please avoid creating duplicates.
+
+          You can get your USB PID by running `lsusb` in a terminal:
+
+          ```shell
+          lsusb | grep 1532
+          ```
+
+          For example, if you see `1532:0203`, your device PID is `0203`.
+
+          Your device may have different PIDs depending if it's wired or wireless, so check those too.
+
+          If the issue is closed, or the pull request is merged (purple), your device is supported in the next release. [Check the comparison](https://github.com/openrazer/openrazer/compare/stable...master) to see if that's the case!
+
+        ## For new devices
+
   - type: input
     id: device_name
     attributes:

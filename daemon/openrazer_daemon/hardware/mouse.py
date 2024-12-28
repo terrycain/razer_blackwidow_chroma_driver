@@ -418,6 +418,23 @@ class RazerNagaHexV2(__RazerDevice):
         # self.key_manager.close()
 
 
+class RazerNaga(__RazerDevice):
+    """
+    Class for the Razer Naga
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Razer_Naga-if0(1|2)-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x0015
+    DEDICATED_MACRO_KEYS = True
+    METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy_byte', 'set_dpi_xy_byte', 'get_poll_rate', 'set_poll_rate',
+               'set_logo_none', 'set_logo_on', 'set_scroll_none', 'set_scroll_on', 'set_backlight_none', 'set_backlight_on']
+
+    DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/products/40/razer-naga-molten-gallery-4.png"
+
+    DPI_MAX = 5600
+
+
 class RazerNaga2012(__RazerDevice):
     """
     Class for the Razer Naga 2012
@@ -1648,6 +1665,50 @@ class RazerBasiliskV3ProWireless(RazerBasiliskV3ProWired):
     USB_PID = 0x00AB
 
 
+class RazerBasiliskV3Pro35KWired(RazerBasiliskV3ProWired):
+    """
+    Class for the Razer Basilisk V3 Pro 35K (Wired)
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Basilisk_V3_Pro_35K_000000000000-if0(1|2)-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x00CC
+    HAS_MATRIX = True
+    MATRIX_DIMS = [1, 13]
+    METHODS = ['get_device_type_mouse',
+               'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_dpi_stages', 'set_dpi_stages',
+               'get_poll_rate', 'set_poll_rate',
+               'get_brightness', 'set_brightness',
+               'get_logo_brightness', 'set_logo_brightness',
+               'get_scroll_brightness', 'set_scroll_brightness',
+               # Scroll wheel controls
+               'get_scroll_mode', 'set_scroll_mode',
+               'get_scroll_acceleration', 'set_scroll_acceleration',
+               'get_scroll_smart_reel', 'set_scroll_smart_reel',
+               # All LEDs (partial support)
+               'set_static_effect', 'set_wave_effect', 'set_spectrum_effect', 'set_none_effect',
+               # Logo (partial support)
+               'set_logo_wave', 'set_logo_static', 'set_logo_spectrum', 'set_logo_none',
+               # Scroll wheel (partial support)
+               'set_scroll_wave', 'set_scroll_static', 'set_scroll_spectrum', 'set_scroll_none',
+               # Can set custom matrix effects
+               'set_custom_effect', 'set_key_row',
+               # Battery
+               'get_battery', 'is_charging', 'get_idle_time', 'set_idle_time', 'get_low_battery_threshold', 'set_low_battery_threshold']
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src2/14676/14676-1-en-v1.png"
+
+    DPI_MAX = 35000
+
+
+class RazerBasiliskV3Pro35KWireless(RazerBasiliskV3Pro35KWired):
+    """
+    Class for the Razer Basilisk V3 Pro 35K (Wireless)
+    """
+
+    USB_PID = 0x00CD
+
+
 class RazerHyperPollingWirelessDongle(__RazerDevice):
     """
     Class for the Razer HyperPolling Wireless Dongle
@@ -1824,3 +1885,29 @@ class RazerViperV3ProWireless(RazerViperV3ProWired):
     METHODS = RazerViperV3ProWired.METHODS + ['set_hyperpolling_wireless_dongle_indicator_led_mode']
 
     POLL_RATES = [125, 500, 1000, 2000, 4000, 8000]
+
+
+class RazerDeathAdderV3HyperSpeedWired(__RazerDevice):
+    """
+    Class for the Razer DeathAdder V3 HyperSpeed (Wired)
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*usb-Razer_Razer_DeathAdder_V3_HyperSpeed_000000000000-if0(1|2)-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x00C4
+    METHODS = ['get_device_type_mouse', 'max_dpi', 'get_dpi_xy', 'set_dpi_xy', 'get_dpi_stages', 'set_dpi_stages',
+               'get_poll_rate', 'set_poll_rate',
+               # Battery
+               'get_battery', 'is_charging', 'get_idle_time', 'set_idle_time', 'get_low_battery_threshold', 'set_low_battery_threshold']
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src/6124/6124-1-en-v2.png"
+
+    DPI_MAX = 26000
+
+
+class RazerDeathAdderV3HyperSpeedWireless(RazerDeathAdderV3HyperSpeedWired):
+    """
+    Class for the Razer DeathAdder V3 HyperSpeed (Wireless)
+    """
+
+    USB_PID = 0x00C5

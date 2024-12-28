@@ -79,3 +79,18 @@ class RazerGoliathusExtended(__RazerDeviceBrightnessSuspend):
                'set_custom_effect', 'set_key_row', 'set_reactive_effect', 'trigger_reactive_effect']
 
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/1395/1395_goliathusextended.png"
+
+
+class RazerGoliathusChroma3XL(__RazerDeviceBrightnessSuspend):
+    """
+    Class for the Razer Goliathus Chroma 3XL
+    """
+    USB_VID = 0x1532
+    USB_PID = 0x0C06
+    HAS_MATRIX = True
+    MATRIX_DIMS = [1, 1]
+    METHODS = ['get_device_type_mousemat', 'set_static_effect', 'set_spectrum_effect',
+               'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
+               'set_custom_effect', 'set_key_row', 'set_reactive_effect', 'trigger_reactive_effect']
+
+    DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/1395/1395_goliathusextended.png"

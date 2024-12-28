@@ -7,15 +7,7 @@ import logging
 import threading
 import datetime
 import time
-
-try:
-    import notify2
-except ImportError:
-    notify2 = None
-
-
-# TODO https://askubuntu.com/questions/110969/notify-send-ignores-timeout
-NOTIFY_TIMEOUT = 4000
+import subprocess
 
 
 class BatteryNotifier(threading.Thread):
@@ -26,28 +18,16 @@ class BatteryNotifier(threading.Thread):
     def __init__(self, parent, device_id, device_name):
         super().__init__()
         self._logger = logging.getLogger('razer.device{0}.batterynotifier'.format(device_id))
-        self._notify2 = notify2 is not None
 
         self.event = threading.Event()
         self.frequency = 0
         self.percent = 0
-
-        if self._notify2:
-            try:
-                notify2.init('OpenRazer')
-            except Exception as err:
-                self._logger.warning("Failed to init notification daemon, err: {0}".format(err))
-                self._notify2 = False
 
         self._shutdown = False
         self._device_name = device_name
 
         # Could save reference to parent but only need battery level function
         self._get_battery_func = parent.getBattery
-
-        if self._notify2:
-            self._notification = notify2.Notification(summary=device_name)
-            self._notification.set_timeout(NOTIFY_TIMEOUT)
 
         self._last_notify_time = datetime.datetime(1970, 1, 1)
 
@@ -67,6 +47,13 @@ class BatteryNotifier(threading.Thread):
         :type value: bool
         """
         self._shutdown = value
+
+    def show_notification(self, summary: str, message: str, icon: str) -> None:
+        try:
+            subprocess.run(["notify-send", "-a", "OpenRazer", "-i", icon, "-t", "4000", summary, message],
+                           check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        except subprocess.CalledProcessError as e:
+            self._logger.warning(f"Failed to show notification: {e.output.strip()}")
 
     def notify_battery(self):
         now = datetime.datetime.now()
@@ -105,12 +92,10 @@ class BatteryNotifier(threading.Thread):
             elif battery_level == 100.0:
                 message = "Battery is fully charged ({0}%)".format(battery_percent)
 
-            if self._notify2:
-                self._logger.debug("{0} Battery at {1}%".format(self._device_name, battery_percent))
+            self._logger.debug("{0} Battery at {1}%".format(self._device_name, battery_percent))
 
-                if battery_level <= self.percent:
-                    self._notification.update(summary=title, message=message, icon=icon)
-                    self._notification.show()
+            if battery_level <= self.percent:
+                self.show_notification(summary=title, message=message, icon=icon)
 
     def run(self):
         """

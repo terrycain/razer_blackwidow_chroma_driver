@@ -65,9 +65,9 @@ Depends: ${misc:Depends},
          python3-gi,
          python3-pyudev,
          python3-setproctitle,
-         python3-notify2,
          python3-daemonize (>= 2.4.0),
          gir1.2-glib-2.0,
+         libnotify-bin,
          xautomation,
          dbus-session-bus
 Recommends: python3-openrazer (= ${binary:Version})

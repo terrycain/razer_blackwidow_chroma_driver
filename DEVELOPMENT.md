@@ -107,7 +107,7 @@ set your PYTHONPATH so you can run from sources.
 For Debian/Ubuntu install the following packages to be able to run the daemon:
 
 ```
-apt-get install -y python3 python3-daemonize python3-dbus python3-gi python3-notify2 python3-numpy python3-pyudev python3-setproctitle
+apt-get install -y libnotify-bin python3 python3-daemonize python3-dbus python3-gi python3-numpy python3-pyudev python3-setproctitle
 ```
 
 #### RedHat/Fedora
@@ -115,7 +115,7 @@ apt-get install -y python3 python3-daemonize python3-dbus python3-gi python3-not
 For RedHat/Fedora install the following packages to be able to run the daemon:
 
 ```
-dnf install -y python3 python3-daemonize python3-dbus python3-notify2 python3-numpy python3-pyudev python3-setproctitle
+dnf install -y libnotify python3 python3-daemonize python3-dbus python3-numpy python3-pyudev python3-setproctitle
 ```
 
 #### Test the daemon

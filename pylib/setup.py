@@ -5,12 +5,12 @@ from setuptools import setup, find_packages
 
 setup(
     name="openrazer",
-    version="3.8.0",
+    version="3.9.0",
     packages=find_packages(exclude=["tests", "openrazer._fake_driver"]),
     install_requires=[
         "dbus-python >= 1.2.0",
         "numpy >= 1.11.0",
-        "openrazer_daemon == 3.8.0",
+        "openrazer_daemon == 3.9.0",
     ],
     author="OpenRazer contributors",
     description="Library for interacting with the OpenRazer daemon.",

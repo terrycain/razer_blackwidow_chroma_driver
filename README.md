@@ -98,6 +98,7 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Razer Blade 17 (2022)                         |  1532:028B  |
 | Razer Blade 14 (2022)                         |  1532:028C  |
 | Razer BlackWidow V4 Pro                       |  1532:028D  |
+| Razer Ornata V3                               |  1532:028F  |
 | Razer DeathStalker V2 Pro (Wireless)          |  1532:0290  |
 | Razer DeathStalker V2 Pro (Wired)             |  1532:0292  |
 | Razer BlackWidow V4 X                         |  1532:0293  |
@@ -112,6 +113,7 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Razer Ornata V3                               |  1532:02A1  |
 | Razer Ornata V3 X                             |  1532:02A2  |
 | Razer Ornata V3 Tenkeyless                    |  1532:02A3  |
+| Razer BlackWidow V4 75%                       |  1532:02A5  |
 | Razer Blade 14 (2024)                         |  1532:02B6  |
 | Razer BlackWidow V3 Tenkeyless                |  1532:0A24  |
 
@@ -119,6 +121,7 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Device                                        | USB VID:PID |
 | --------------------------------------------- | ----------- |
 | Razer Orochi 2011                             |  1532:0013  |
+| Razer Naga                                    |  1532:0015  |
 | Razer DeathAdder 3.5G                         |  1532:0016  |
 | Razer Naga Epic                               |  1532:001F  |
 | Razer Abyssus 1800                            |  1532:0020  |
@@ -213,6 +216,10 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Razer Viper V3 Pro (Wireless)                 |  1532:00C1  |
 | Razer DeathAdder V3 Pro (Wired)               |  1532:00C2  |
 | Razer DeathAdder V3 Pro (Wireless)            |  1532:00C3  |
+| Razer DeathAdder V3 HyperSpeed (Wired)        |  1532:00C4  |
+| Razer DeathAdder V3 HyperSpeed (Wireless)     |  1532:00C5  |
+| Razer Basilisk V3 Pro 35K (Wired)             |  1532:00CC  |
+| Razer Basilisk V3 Pro 35K (Wireless)          |  1532:00CD  |
 
 ### Mousemats
 | Device                                        | USB VID:PID |
@@ -222,6 +229,7 @@ The devices below are fully feature supported by OpenRazer, which means all avai
 | Razer Goliathus                               |  1532:0C01  |
 | Razer Goliathus Extended                      |  1532:0C02  |
 | Razer Firefly v2                              |  1532:0C04  |
+| Razer Goliathus Chroma 3XL                    |  1532:0C06  |
 
 ### Headsets
 | Device                                        | USB VID:PID |

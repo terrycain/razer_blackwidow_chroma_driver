@@ -173,7 +173,7 @@ while IFS= read -r device_raw; do
     device_pid=$(echo "$device_raw" | cut -d' ' -f2 | sed 's/0x//')
 
     devicetype_line=$(echo "$devicetype_lines" | sed -n '/case '$device':/,/break;/p' | grep "device_type = ")
-    device_name=$(echo "$devicetype_line" | sed 's/[[:space:]]\+device_type = "\(.\+\)\\n";.*/\1/')
+    device_name=$(echo "$devicetype_line" | sed 's/[[:space:]]\+device_type = "\(.\+\)\\n";.*/\1/' | sed 's/%/%%/g')
 
     #echo "-----------------------------" >&2
     echo "Generating for $device_name (1532:$device_pid) ..." >&2
@@ -189,12 +189,13 @@ while IFS= read -r device_raw; do
         exit 1
     fi
 
-    device_name_simple=$(echo "$device_name" | tr -d ' ' | tr -d '(' | tr -d ')' | tr '[:upper:]' '[:lower:]')
+    device_name_simple=$(echo "$device_name" | tr -d ' ' | tr -d '(' | tr -d ')' | sed 's/%%/pct/g' | tr '[:upper:]' '[:lower:]')
     filename="./pylib/openrazer/_fake_driver/$device_name_simple.cfg"
 
     # There are some devices that have multiple PID for the same codename.
     # Why exactly I'm not sure, but we need to add a suffix to the fake driver file then.
     if [ "$device_pid" = "0506" ] || # Razer Kraken 7.1
+        [ "$device_pid" = "028F" ] || # Razer Ornata V3
         [ "$device_pid" = "02A2" ] || # Razer Ornata V3 X
         [ "$device_pid" = "00C2" ] || # Razer DeathAdder V3 Pro (Wired)
         [ "$device_pid" = "00C3" ]; then # Razer DeathAdder V3 Pro (Wireless)
