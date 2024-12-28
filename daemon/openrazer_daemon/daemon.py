@@ -90,6 +90,8 @@ class RazerDaemon(DBusService):
         self._persistence.status = {"changed": False}
         self.read_persistence(persistence_file)
 
+        self._unknown_serial_counter: dict[tuple[int, int], int] = {}     # maps vid/pid to last used unique character for unknown device
+
         # Check for plugdev group
         if not self._check_plugdev_group():
             self.logger.critical("User is not a member of the plugdev group")
@@ -492,7 +494,8 @@ class RazerDaemon(DBusService):
                     razer_device = device_class(device_path=sys_path, device_number=device_number, config=self._config,
                                                 persistence=self._persistence, testing=self._test_dir is not None,
                                                 additional_interfaces=sorted(additional_interfaces),
-                                                additional_methods=[])
+                                                additional_methods=[],
+                                                unknown_serial_counter = self._unknown_serial_counter)
 
                     # Wireless devices sometimes don't listen
                     count = 0
@@ -530,7 +533,8 @@ class RazerDaemon(DBusService):
                 self.logger.info('Found valid device.%d: %s', device_number, sys_name)
                 razer_device = device_class(device_path=sys_path, device_number=device_number, config=self._config,
                                             persistence=self._persistence, testing=self._test_dir is not None,
-                                            additional_interfaces=None, additional_methods=[])
+                                            additional_interfaces=None, additional_methods=[],
+                                            unknown_serial_counter = self._unknown_serial_counter)
 
                 # Its a udev event so currently the device hasn't been chmodded yet
                 time.sleep(0.2)

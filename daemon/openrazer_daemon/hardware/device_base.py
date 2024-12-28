@@ -46,7 +46,7 @@ class RazerDevice(DBusService):
 
     DEVICE_IMAGE = None
 
-    def __init__(self, device_path, device_number, config, persistence, testing, additional_interfaces, additional_methods):
+    def __init__(self, device_path, device_number, config, persistence, testing, additional_interfaces, additional_methods, unknown_serial_counter):
 
         self.logger = logging.getLogger('razer.device{0}'.format(device_number))
         self.logger.info("Initialising device.%d %s", device_number, self.__class__.__name__)
@@ -55,7 +55,7 @@ class RazerDevice(DBusService):
         self._serial = None
 
         # Unknown Device Tracking
-        self._unknown_serial_counter: dict[tuple[int, int], int] = {}     # maps vid/pid to last used unique character for unknown device
+        self._unknown_serial_counter: dict[tuple[int, int], int] = unknown_serial_counter     # maps vid/pid to last used unique character for unknown device
 
         # Local storage key name
         self.storage_name = "UnknownDevice"
