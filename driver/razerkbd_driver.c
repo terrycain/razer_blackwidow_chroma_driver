@@ -3417,15 +3417,16 @@ static DEVICE_ATTR(charge_low_threshold,    0660, razer_attr_read_charge_low_thr
  */
 static int razer_get_kbd_device_value_index(struct usb_device *usb_dev)
 {
+    int i;
     // Find existing index for usb device.
-    for (int i = 0; i < (sizeof(device_values) / sizeof(struct razer_kbd_device_values)); i++) {
+    for (i = 0; i < (sizeof(device_values) / sizeof(struct razer_kbd_device_values)); i++) {
         if (device_values[i].usb_dev == usb_dev) {
             return i;
         }
     }
 
     // If none is found, reserve a new index for usb device. Should only be one time per device
-    for (int i = 0; i < (sizeof(device_values) / sizeof(struct razer_kbd_device_values)); i++) {
+    for (i = 0; i < (sizeof(device_values) / sizeof(struct razer_kbd_device_values)); i++) {
         if (!device_values[i].usb_dev || (device_values[i].usb_dev->state != USB_STATE_CONFIGURED &&
                                           device_values[i].usb_dev->state != USB_STATE_SUSPENDED &&
                                           device_values[i].usb_dev->state != USB_STATE_DEFAULT)) {

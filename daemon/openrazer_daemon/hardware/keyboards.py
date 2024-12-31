@@ -590,7 +590,7 @@ class RazerHuntsmanV3Pro(_RazerDeviceBrightnessSuspend):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.key_manager = _KeyboardKeyManager(self._device_number, self.event_files, self, use_epoll=True, testing=self._testing)
-    
+
     def _close(self):
         """
         Close the key manager
@@ -599,6 +599,8 @@ class RazerHuntsmanV3Pro(_RazerDeviceBrightnessSuspend):
         self.key_manager.close()
 
 # TODO Should become _RippleKeyboard once kernel support for driver mode is implemented
+
+
 class RazerHuntsmanMiniAnalog(_RazerDeviceBrightnessSuspend):
     """
     Class for the Razer Huntsman Mini Analog
