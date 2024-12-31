@@ -3667,12 +3667,12 @@ static int razer_raw_event_standard(struct hid_device *hdev, struct razer_kbd_de
  */
 static int razer_raw_event_bitfield(struct hid_device *hdev, struct razer_kbd_device *device, struct usb_interface *intf, struct hid_report *report, u8 *data, int size)
 {
+    u8 bitfield[20] = { 0 };
+
     int dev_val_index = razer_get_kbd_device_value_index(device->usb_dev);
     if (dev_val_index < 0) {
         return 1;
     }
-
-    u8 bitfield[20] = { 0 };
 
     // The event were looking for is 16 or 22 or 48 bytes long and starts with 0x04.
     if(intf->cur_altsetting->desc.bInterfaceProtocol == USB_INTERFACE_PROTOCOL_KEYBOARD &&
