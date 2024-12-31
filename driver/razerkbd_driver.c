@@ -3413,12 +3413,44 @@ static DEVICE_ATTR(charge_colour,           0220, NULL,                         
 static DEVICE_ATTR(charge_low_threshold,    0660, razer_attr_read_charge_low_threshold,       razer_attr_write_charge_low_threshold);
 
 /**
+ * Find existing device value index for usb device. If none is found, reserve a new index.
+ */
+static int razer_get_kbd_device_value_index(struct usb_device *usb_dev)
+{
+    // Find existing index for usb device.
+    for (int i = 0; i < (sizeof(device_values) / sizeof(struct razer_kbd_device_values)); i++) {
+        if (device_values[i].usb_dev == usb_dev) {
+            return i;
+        }
+    }
+
+    // If none is found, reserve a new index for usb device. Should only be one time per device
+    for (int i = 0; i < (sizeof(device_values) / sizeof(struct razer_kbd_device_values)); i++) {
+        if (!device_values[i].usb_dev || (device_values[i].usb_dev->state != USB_STATE_CONFIGURED &&
+                                          device_values[i].usb_dev->state != USB_STATE_SUSPENDED &&
+                                          device_values[i].usb_dev->state != USB_STATE_DEFAULT)) {
+            device_values[i].usb_dev = usb_dev;
+            device_values[i].fn_on = 0x00;
+            return i;
+        }
+    }
+
+    // All device_values are used. Are we using more than 32 Razer keyboards at once?
+    return -1;
+}
+
+/**
  * Deal with FN toggle
  */
 static int razer_event(struct hid_device *hdev, struct hid_field *field, struct hid_usage *usage, __s32 value)
 {
     struct razer_kbd_device *device = hid_get_drvdata(hdev);
     const struct razer_key_translation *translation;
+
+    int dev_val_index = razer_get_kbd_device_value_index(device->usb_dev);
+    if (dev_val_index < 0) {
+        return 1;
+    }
 
     // No translations needed on the Blades
     if (is_blade_laptop(device)) {
@@ -3490,11 +3522,11 @@ static int razer_event(struct hid_device *hdev, struct hid_field *field, struct 
     }
 
     if(translation) {
-        if (test_bit(usage->code, device->pressed_fn) || device->fn_on) {
+        if (test_bit(usage->code, device_values[dev_val_index].pressed_fn) || device_values[dev_val_index].fn_on) {
             if (value) {
-                set_bit(usage->code, device->pressed_fn);
+                set_bit(usage->code, device_values[dev_val_index].pressed_fn);
             } else {
-                clear_bit(usage->code, device->pressed_fn);
+                clear_bit(usage->code, device_values[dev_val_index].pressed_fn);
             }
 
             input_event(field->hidinput->input, usage->type, translation->to, value);
@@ -3534,10 +3566,14 @@ static int razer_event(struct hid_device *hdev, struct hid_field *field, struct 
  */
 static int razer_raw_event_standard(struct hid_device *hdev, struct razer_kbd_device *device, struct usb_interface *intf, struct hid_report *report, u8 *data, int size)
 {
-    // The event were looking for is 16 or 22 bytes long and starts with 0x04.
-    // Newer firmware seems to use 22 bytes.
+    int dev_val_index = razer_get_kbd_device_value_index(device->usb_dev);
+    if (dev_val_index < 0) {
+        return 1;
+    }
+
+    // The event were looking for is 16 or 22 or 48 bytes long and starts with 0x04.
     if(intf->cur_altsetting->desc.bInterfaceProtocol == USB_INTERFACE_PROTOCOL_KEYBOARD &&
-       ((size == 22) || (size == 16)) && data[0] == 0x04) {
+       ((size == 48) || (size == 22) || (size == 16)) && data[0] == 0x04) {
         // Convert 04... to 0100...
         int index = size-1; // This way we start at 2nd last value, does subtract 1 from the 15key rollover though (not an issue cmon)
         int found_fn = 0x00;
@@ -3607,7 +3643,7 @@ static int razer_raw_event_standard(struct hid_device *hdev, struct razer_kbd_de
             data[index+1] = cur_value;
         }
 
-        device->fn_on = !!found_fn;
+        device_values[dev_val_index].fn_on = !!found_fn;
 
         data[0] = 0x01;
         data[1] = 0x00;
@@ -3630,12 +3666,16 @@ static int razer_raw_event_standard(struct hid_device *hdev, struct razer_kbd_de
  */
 static int razer_raw_event_bitfield(struct hid_device *hdev, struct razer_kbd_device *device, struct usb_interface *intf, struct hid_report *report, u8 *data, int size)
 {
+    int dev_val_index = razer_get_kbd_device_value_index(device->usb_dev);
+    if (dev_val_index < 0) {
+        return 1;
+    }
+
     u8 bitfield[20] = { 0 };
 
-    // The event were looking for is 16 or 22 bytes long and starts with 0x04.
-    // Newer firmware seems to use 22 bytes.
+    // The event were looking for is 16 or 22 or 48 bytes long and starts with 0x04.
     if(intf->cur_altsetting->desc.bInterfaceProtocol == USB_INTERFACE_PROTOCOL_KEYBOARD &&
-       ((size == 22) || (size == 16)) && data[0] == 0x04) {
+       ((size == 48) || (size == 22) || (size == 16)) && data[0] == 0x04) {
         // Convert 04... to 0100...
         int index = size-1; // This way we start at 2nd last value, does subtract 1 from the 15key rollover though (not an issue cmon)
         int found_fn = 0x00;
@@ -3757,7 +3797,7 @@ static int razer_raw_event_bitfield(struct hid_device *hdev, struct razer_kbd_de
             }
         }
 
-        device->fn_on = !!found_fn;
+        device_values[dev_val_index].fn_on = !!found_fn;
 
         data[0] = 0x01;
         data[1] = 0x00;
@@ -3876,6 +3916,12 @@ static int razer_kbd_probe(struct hid_device *hdev, const struct hid_device_id *
 
     // Init data
     razer_kbd_init(dev, intf, hdev);
+
+    // Reserve a device value index for usb device
+    if (razer_get_kbd_device_value_index(usb_dev) < 0) {
+        printk(KERN_INFO "razerkbd: Too many devices\n");
+        goto exit_free;
+    }
 
     // Other interfaces are actual key-emitting devices
     if(intf->cur_altsetting->desc.bInterfaceProtocol == USB_INTERFACE_PROTOCOL_MOUSE) {

@@ -160,15 +160,20 @@
 #define RAZER_FIREFLY_WAIT_MIN_US 900
 #define RAZER_FIREFLY_WAIT_MAX_US 1000
 
+// Store devices values for global usb device, to use values arcoss multiple hid_device's
+static struct razer_kbd_device_values {
+    struct usb_device *usb_dev;
+
+    unsigned int fn_on;
+    DECLARE_BITMAP(pressed_fn, KEY_CNT);
+} device_values[32];
+
 struct razer_kbd_device {
     struct usb_device *usb_dev;
     struct mutex lock;
     unsigned char usb_interface_protocol;
     unsigned short usb_vid;
     unsigned short usb_pid;
-
-    unsigned int fn_on;
-    DECLARE_BITMAP(pressed_fn, KEY_CNT);
 
     unsigned char block_keys[3];
     unsigned char left_alt_on;
