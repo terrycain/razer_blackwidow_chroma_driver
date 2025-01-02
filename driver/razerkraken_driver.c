@@ -75,7 +75,7 @@ static int razer_kraken_send_control_msg(struct usb_device *usb_dev,struct razer
 
     kfree(buf);
     if(len!=size)
-        printk(KERN_WARNING "razer driver: Device data transfer failed.\n");
+        printk(KERN_WARNING "razerkraken: Device data transfer failed.\n");
 
     return ((len < 0) ? len : ((len != size) ? -EIO : 0));
 }
@@ -219,6 +219,10 @@ static ssize_t razer_attr_read_device_type(struct device *dev, struct device_att
         device_type = "Razer Kraken Ultimate\n";
         break;
 
+    case USB_DEVICE_ID_RAZER_KRAKEN_V3_PRO:
+        device_type = "Razer Kraken V3 Pro\n";
+        break;
+
     default:
         device_type = "Unknown Device\n";
     }
@@ -333,6 +337,7 @@ static ssize_t razer_attr_write_matrix_effect_static(struct device *dev, struct 
     case USB_DEVICE_ID_RAZER_KRAKEN:
     case USB_DEVICE_ID_RAZER_KRAKEN_V2:
     case USB_DEVICE_ID_RAZER_KRAKEN_ULTIMATE:
+    case USB_DEVICE_ID_RAZER_KRAKEN_V3_PRO:
         razer_kraken_send_control_msg(device->usb_dev, &rgb_report, 0);
         break;
     }
@@ -529,6 +534,7 @@ static ssize_t razer_attr_read_matrix_effect_breath(struct device *dev, struct d
     switch(device->usb_pid) {
     case USB_DEVICE_ID_RAZER_KRAKEN_V2:
     case USB_DEVICE_ID_RAZER_KRAKEN_ULTIMATE:
+    case USB_DEVICE_ID_RAZER_KRAKEN_V3_PRO:
         switch(num_colours) {
         case 3:
             return get_rgb_from_addr(dev, device->breathing_address[2], 0x0C, buf);
@@ -696,6 +702,7 @@ static void razer_kraken_init(struct razer_kraken_device *dev, struct usb_interf
     switch(dev->usb_pid) {
     case USB_DEVICE_ID_RAZER_KRAKEN_V2:
     case USB_DEVICE_ID_RAZER_KRAKEN_ULTIMATE:
+    case USB_DEVICE_ID_RAZER_KRAKEN_V3_PRO:
         dev->led_mode_address = KYLIE_SET_LED_ADDRESS;
         dev->custom_address = KYLIE_CUSTOM_ADDRESS_START;
         dev->breathing_address[0] = KYLIE_BREATHING1_ADDRESS_START;
@@ -722,6 +729,7 @@ static void razer_kraken_init(struct razer_kraken_device *dev, struct usb_interf
 static int razer_kraken_probe(struct hid_device *hdev, const struct hid_device_id *id)
 {
     int retval = 0;
+    unsigned char expected_protocol = USB_INTERFACE_PROTOCOL_NONE;
     struct usb_interface *intf = to_usb_interface(hdev->dev.parent);
     struct usb_device *usb_dev = interface_to_usbdev(intf);
     struct razer_kraken_device *dev = NULL;
@@ -735,7 +743,14 @@ static int razer_kraken_probe(struct hid_device *hdev, const struct hid_device_i
     // Init data
     razer_kraken_init(dev, intf);
 
-    if(dev->usb_interface_protocol == USB_INTERFACE_PROTOCOL_NONE) {
+    switch(usb_dev->descriptor.idProduct) {
+    // The Kraken V3 Pro headset uses the keyboard protocol
+    case USB_DEVICE_ID_RAZER_KRAKEN_V3_PRO:
+        expected_protocol = USB_INTERFACE_PROTOCOL_KEYBOARD;
+        break;
+    }
+
+    if(dev->usb_interface_protocol == expected_protocol) {
         CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_version);                               // Get driver version
         CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_test);                                  // Test mode
         CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_device_type);                           // Get string of device type
@@ -753,6 +768,7 @@ static int razer_kraken_probe(struct hid_device *hdev, const struct hid_device_i
         case USB_DEVICE_ID_RAZER_KRAKEN:
         case USB_DEVICE_ID_RAZER_KRAKEN_V2:
         case USB_DEVICE_ID_RAZER_KRAKEN_ULTIMATE:
+        case USB_DEVICE_ID_RAZER_KRAKEN_V3_PRO:
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_none);            // No effect
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_spectrum);        // Spectrum effect
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_static);          // Static effect
@@ -813,6 +829,7 @@ static void razer_kraken_disconnect(struct hid_device *hdev)
         case USB_DEVICE_ID_RAZER_KRAKEN:
         case USB_DEVICE_ID_RAZER_KRAKEN_V2:
         case USB_DEVICE_ID_RAZER_KRAKEN_ULTIMATE:
+        case USB_DEVICE_ID_RAZER_KRAKEN_V3_PRO:
             device_remove_file(&hdev->dev, &dev_attr_matrix_effect_none);            // No effect
             device_remove_file(&hdev->dev, &dev_attr_matrix_effect_spectrum);        // Spectrum effect
             device_remove_file(&hdev->dev, &dev_attr_matrix_effect_static);          // Static effect
@@ -853,6 +870,7 @@ static const struct hid_device_id razer_devices[] = {
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_KRAKEN) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_KRAKEN_V2) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_KRAKEN_ULTIMATE) },
+    { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_KRAKEN_V3_PRO) },
     { 0 }
 };
 

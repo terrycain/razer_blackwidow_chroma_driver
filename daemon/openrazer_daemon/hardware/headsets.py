@@ -177,3 +177,21 @@ class RazerKrakenKittyEdition(__RazerDeviceBrightnessSuspend):
     MATRIX_DIMS = [1, 4]
 
     DEVICE_IMAGE = "https://assets2.razerzone.com/images/pnx.assets/1c503aa176bc82d999299aba0d6c7d2c/kraken-kitty-quartz.png"
+
+
+class RazerKrakenV3Pro(__RazerDevice):
+    """
+    Class for the Razer Kraken V3 Pro
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Kraken_V3_Pro-event-if03')
+
+    USB_VID = 0x1532
+    USB_PID = 0x052C
+    METHODS = ['get_device_type_headset',
+               'set_static_effect', 'set_spectrum_effect', 'set_none_effect', 'set_breath_single_effect',
+               'set_breath_dual_effect', 'set_breath_triple_effect',
+               'set_custom_kraken']
+    HAS_MATRIX = True
+    MATRIX_DIMS = [1, 22]
+
+    DEVICE_IMAGE = "https://assets3.razerzone.com/qJyFg5OTeAdMCtwboWHEvMexeDQ=/1500x1000/https%3A%2F%2Fmedias-p1.phoenix.razer.com%2Fsys-master-phoenix-images-container%2Fha7%2Fh93%2F9248880263198%2F211021-kraken-v3-pro-1500x1000-6.jpg"
