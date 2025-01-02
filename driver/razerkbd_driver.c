@@ -290,6 +290,7 @@ static void razer_get_report_params(struct usb_device *usb_dev, uint *report_ind
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRED:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         *report_index = 0x03;
         *response_index = 0x03;
         *wait_min = RAZER_BLACKWIDOW_CHROMA_WAIT_MIN_US;
@@ -1241,6 +1242,10 @@ static ssize_t razer_attr_read_device_type(struct device *dev, struct device_att
         device_type = "Razer Blade 18 (2023)\n";
         break;
 
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
+        device_type = "Razer Huntsman V3 Pro\n";
+        break;
+
     default:
         device_type = "Unknown Device\n";
     }
@@ -1655,6 +1660,7 @@ static ssize_t razer_attr_write_matrix_effect_none(struct device *dev, struct de
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_X:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         request = razer_chroma_extended_matrix_effect_none(VARSTORE, BACKLIGHT_LED);
         request.transaction_id.id = 0x1F;
         break;
@@ -1752,6 +1758,7 @@ static ssize_t razer_attr_write_matrix_effect_wave(struct device *dev, struct de
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_X:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         request = razer_chroma_extended_matrix_effect_wave(VARSTORE, BACKLIGHT_LED, direction);
         request.transaction_id.id = 0x1F;
         break;
@@ -1857,6 +1864,7 @@ static ssize_t razer_attr_write_matrix_effect_spectrum(struct device *dev, struc
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_X:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         request = razer_chroma_extended_matrix_effect_spectrum(VARSTORE, BACKLIGHT_LED);
         request.transaction_id.id = 0x1F;
         break;
@@ -1955,6 +1963,7 @@ static ssize_t razer_attr_write_matrix_effect_reactive(struct device *dev, struc
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         request = razer_chroma_extended_matrix_effect_reactive(VARSTORE, BACKLIGHT_LED, speed, (struct razer_rgb*)&buf[1]);
         request.transaction_id.id = 0x1F;
         break;
@@ -2130,6 +2139,7 @@ static ssize_t razer_attr_write_matrix_effect_static(struct device *dev, struct 
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         if (count != 3) {
             printk(KERN_WARNING "razerkbd: Static mode only accepts RGB (3byte)\n");
             return -EINVAL;
@@ -2247,6 +2257,7 @@ static ssize_t razer_attr_write_matrix_effect_starlight(struct device *dev, stru
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_X:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         if (count == 7) {
             request = razer_chroma_extended_matrix_effect_starlight_dual(VARSTORE, BACKLIGHT_LED, buf[0], (struct razer_rgb*)&buf[1], (struct razer_rgb*)&buf[4]);
         } else if(count == 4) {
@@ -2461,6 +2472,7 @@ static ssize_t razer_attr_write_matrix_effect_breath(struct device *dev, struct 
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_X:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         if (count == 3) { // Single colour mode
             request = razer_chroma_extended_matrix_effect_breathing_single(VARSTORE, BACKLIGHT_LED, (struct razer_rgb*)&buf[0]);
         } else if (count == 6) { // Dual colour mode
@@ -2666,6 +2678,7 @@ static ssize_t razer_attr_write_matrix_effect_custom(struct device *dev, struct 
     case USB_DEVICE_ID_RAZER_HUNTSMAN_MINI_ANALOG:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V3_MINI:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_X:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         request = razer_chroma_extended_matrix_effect_custom_frame();
         request.transaction_id.id = 0x1F;
         break;
@@ -2816,6 +2829,7 @@ static ssize_t razer_attr_write_matrix_brightness(struct device *dev, struct dev
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_X:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_PRO:
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_75PCT:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         request = razer_chroma_extended_matrix_brightness(VARSTORE, BACKLIGHT_LED, brightness);
         request.transaction_id.id = 0x1F;
         break;
@@ -3082,6 +3096,7 @@ static ssize_t razer_attr_write_matrix_custom_frame(struct device *dev, struct d
         case USB_DEVICE_ID_RAZER_HUNTSMAN_V2_ANALOG:
         case USB_DEVICE_ID_RAZER_HUNTSMAN_MINI_ANALOG:
         case USB_DEVICE_ID_RAZER_BLACKWIDOW_V4_X:
+        case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
             request = razer_chroma_extended_matrix_set_custom_frame(row_id, start_col, stop_col, (unsigned char*)&buf[offset]);
             request.transaction_id.id = 0x1F;
             break;
@@ -3398,12 +3413,45 @@ static DEVICE_ATTR(charge_colour,           0220, NULL,                         
 static DEVICE_ATTR(charge_low_threshold,    0660, razer_attr_read_charge_low_threshold,       razer_attr_write_charge_low_threshold);
 
 /**
+ * Find existing device value index for usb device. If none is found, reserve a new index.
+ */
+static int razer_get_kbd_device_value_index(struct usb_device *usb_dev)
+{
+    int i;
+    // Find existing index for usb device.
+    for (i = 0; i < (sizeof(device_values) / sizeof(struct razer_kbd_device_values)); i++) {
+        if (device_values[i].usb_dev == usb_dev) {
+            return i;
+        }
+    }
+
+    // If none is found, reserve a new index for usb device. Should only be one time per device
+    for (i = 0; i < (sizeof(device_values) / sizeof(struct razer_kbd_device_values)); i++) {
+        if (!device_values[i].usb_dev || (device_values[i].usb_dev->state != USB_STATE_CONFIGURED &&
+                                          device_values[i].usb_dev->state != USB_STATE_SUSPENDED &&
+                                          device_values[i].usb_dev->state != USB_STATE_DEFAULT)) {
+            device_values[i].usb_dev = usb_dev;
+            device_values[i].fn_on = 0x00;
+            return i;
+        }
+    }
+
+    // All device_values are used. Are we using more than 32 Razer keyboards at once?
+    return -1;
+}
+
+/**
  * Deal with FN toggle
  */
 static int razer_event(struct hid_device *hdev, struct hid_field *field, struct hid_usage *usage, __s32 value)
 {
     struct razer_kbd_device *device = hid_get_drvdata(hdev);
     const struct razer_key_translation *translation;
+
+    int dev_val_index = razer_get_kbd_device_value_index(device->usb_dev);
+    if (dev_val_index < 0) {
+        return 1;
+    }
 
     // No translations needed on the Blades
     if (is_blade_laptop(device)) {
@@ -3461,6 +3509,7 @@ static int razer_event(struct hid_device *hdev, struct hid_field *field, struct 
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRED:
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRELESS:
     case USB_DEVICE_ID_RAZER_ORNATA_V3_TENKEYLESS:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         translation = find_translation(chroma_keys_5, usage->code);
         break;
 
@@ -3474,11 +3523,11 @@ static int razer_event(struct hid_device *hdev, struct hid_field *field, struct 
     }
 
     if(translation) {
-        if (test_bit(usage->code, device->pressed_fn) || device->fn_on) {
+        if (test_bit(usage->code, device_values[dev_val_index].pressed_fn) || device_values[dev_val_index].fn_on) {
             if (value) {
-                set_bit(usage->code, device->pressed_fn);
+                set_bit(usage->code, device_values[dev_val_index].pressed_fn);
             } else {
-                clear_bit(usage->code, device->pressed_fn);
+                clear_bit(usage->code, device_values[dev_val_index].pressed_fn);
             }
 
             input_event(field->hidinput->input, usage->type, translation->to, value);
@@ -3518,10 +3567,14 @@ static int razer_event(struct hid_device *hdev, struct hid_field *field, struct 
  */
 static int razer_raw_event_standard(struct hid_device *hdev, struct razer_kbd_device *device, struct usb_interface *intf, struct hid_report *report, u8 *data, int size)
 {
-    // The event were looking for is 16 or 22 bytes long and starts with 0x04.
-    // Newer firmware seems to use 22 bytes.
+    int dev_val_index = razer_get_kbd_device_value_index(device->usb_dev);
+    if (dev_val_index < 0) {
+        return 1;
+    }
+
+    // The event were looking for is 16 or 22 or 48 bytes long and starts with 0x04.
     if(intf->cur_altsetting->desc.bInterfaceProtocol == USB_INTERFACE_PROTOCOL_KEYBOARD &&
-       ((size == 22) || (size == 16)) && data[0] == 0x04) {
+       ((size == 48) || (size == 22) || (size == 16)) && data[0] == 0x04) {
         // Convert 04... to 0100...
         int index = size-1; // This way we start at 2nd last value, does subtract 1 from the 15key rollover though (not an issue cmon)
         int found_fn = 0x00;
@@ -3591,7 +3644,7 @@ static int razer_raw_event_standard(struct hid_device *hdev, struct razer_kbd_de
             data[index+1] = cur_value;
         }
 
-        device->fn_on = !!found_fn;
+        device_values[dev_val_index].fn_on = !!found_fn;
 
         data[0] = 0x01;
         data[1] = 0x00;
@@ -3616,10 +3669,14 @@ static int razer_raw_event_bitfield(struct hid_device *hdev, struct razer_kbd_de
 {
     u8 bitfield[20] = { 0 };
 
-    // The event were looking for is 16 or 22 bytes long and starts with 0x04.
-    // Newer firmware seems to use 22 bytes.
+    int dev_val_index = razer_get_kbd_device_value_index(device->usb_dev);
+    if (dev_val_index < 0) {
+        return 1;
+    }
+
+    // The event were looking for is 16 or 22 or 48 bytes long and starts with 0x04.
     if(intf->cur_altsetting->desc.bInterfaceProtocol == USB_INTERFACE_PROTOCOL_KEYBOARD &&
-       ((size == 22) || (size == 16)) && data[0] == 0x04) {
+       ((size == 48) || (size == 22) || (size == 16)) && data[0] == 0x04) {
         // Convert 04... to 0100...
         int index = size-1; // This way we start at 2nd last value, does subtract 1 from the 15key rollover though (not an issue cmon)
         int found_fn = 0x00;
@@ -3741,7 +3798,7 @@ static int razer_raw_event_bitfield(struct hid_device *hdev, struct razer_kbd_de
             }
         }
 
-        device->fn_on = !!found_fn;
+        device_values[dev_val_index].fn_on = !!found_fn;
 
         data[0] = 0x01;
         data[1] = 0x00;
@@ -3817,6 +3874,7 @@ static int razer_kbd_input_mapping(struct hid_device *hdev, struct hid_input *hi
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_WIRELESS:
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRED:
     case USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRELESS:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
         if (hdev->type == HID_TYPE_USBMOUSE && usage->hid == HID_GD_WHEEL) {
             hid_map_usage(hidinput, usage, bit, max, EV_ABS, ABS_VOLUME);
             return 1;
@@ -3859,6 +3917,12 @@ static int razer_kbd_probe(struct hid_device *hdev, const struct hid_device_id *
 
     // Init data
     razer_kbd_init(dev, intf, hdev);
+
+    // Reserve a device value index for usb device
+    if (razer_get_kbd_device_value_index(usb_dev) < 0) {
+        printk(KERN_INFO "razerkbd: Too many devices\n");
+        goto exit_free;
+    }
 
     // Other interfaces are actual key-emitting devices
     if(intf->cur_altsetting->desc.bInterfaceProtocol == USB_INTERFACE_PROTOCOL_MOUSE) {
@@ -4288,6 +4352,21 @@ static int razer_kbd_probe(struct hid_device *hdev, const struct hid_device_id *
         case USB_DEVICE_ID_RAZER_HUNTSMAN_MINI_ANALOG:
         case USB_DEVICE_ID_RAZER_ORNATA_V3_TENKEYLESS:
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_wave);            // Wave effect
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_spectrum);        // Spectrum effect
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_none);            // No effect
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_reactive);        // Reactive effect
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_breath);          // Breathing effect
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_static);          // Static effect
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_custom);          // Custom effect
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_custom_frame);           // Set LED matrix
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_game_led_state);                // Enable game mode & LED
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_macro_led_state);               // Enable macro LED
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_macro_led_effect);              // Change macro LED effect (static, flashing)
+            break;
+
+        case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_wave);            // Wave effect
+            CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_starlight);       // Starlight effect
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_spectrum);        // Spectrum effect
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_none);            // No effect
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_matrix_effect_reactive);        // Reactive effect
@@ -4787,6 +4866,21 @@ static void razer_kbd_disconnect(struct hid_device *hdev)
             device_remove_file(&hdev->dev, &dev_attr_macro_led_state);               // Enable macro LED
             device_remove_file(&hdev->dev, &dev_attr_macro_led_effect);              // Change macro LED effect (static, flashing)
             break;
+
+        case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO:
+            device_remove_file(&hdev->dev, &dev_attr_matrix_effect_wave);            // Wave effect
+            device_remove_file(&hdev->dev, &dev_attr_matrix_effect_starlight);       // Starlight effect
+            device_remove_file(&hdev->dev, &dev_attr_matrix_effect_spectrum);        // Spectrum effect
+            device_remove_file(&hdev->dev, &dev_attr_matrix_effect_none);            // No effect
+            device_remove_file(&hdev->dev, &dev_attr_matrix_effect_reactive);        // Reactive effect
+            device_remove_file(&hdev->dev, &dev_attr_matrix_effect_breath);          // Breathing effect
+            device_remove_file(&hdev->dev, &dev_attr_matrix_effect_static);          // Static effect
+            device_remove_file(&hdev->dev, &dev_attr_matrix_effect_custom);          // Custom effect
+            device_remove_file(&hdev->dev, &dev_attr_matrix_custom_frame);           // Set LED matrix
+            device_remove_file(&hdev->dev, &dev_attr_game_led_state);                // Enable game mode & LED
+            device_remove_file(&hdev->dev, &dev_attr_macro_led_state);               // Enable macro LED
+            device_remove_file(&hdev->dev, &dev_attr_macro_led_effect);              // Change macro LED effect (static, flashing)
+            break;
         }
     } else if(intf->cur_altsetting->desc.bInterfaceProtocol == USB_INTERFACE_PROTOCOL_KEYBOARD) {
         device_remove_file(&hdev->dev, &dev_attr_key_super);
@@ -4931,6 +5025,7 @@ static const struct hid_device_id razer_devices[] = {
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_DEATHSTALKER_V2_PRO_TKL_WIRELESS) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_BLADE_16_2023) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_BLADE_18_2023) },
+    { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO) },
     { 0 }
 };
 
