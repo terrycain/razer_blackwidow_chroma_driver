@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openrazer_daemon"
+version = "3.9.0"
+dependencies = [
+    "daemonize >= 2.4.7",
+    "dbus-python >= 1.2.0",
+    "PyGObject >= 3.20.0",
+    "pyudev >= 0.16.1",
+    "setproctitle >= 1.1.8",
+]
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+# FIXME: Doesn't actually exclude tests directory
+exclude = ["tests", "tests.*"]
