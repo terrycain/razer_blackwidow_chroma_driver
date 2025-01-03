@@ -36,6 +36,21 @@ class RazerFireflyV2(__RazerDeviceBrightnessSuspend):
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/1594/1594_firefly_v2.png"
 
 
+class RazerFireflyV2Pro(__RazerDeviceBrightnessSuspend):
+    """
+    Class for the Razer Firefly V2 pro
+    """
+    USB_VID = 0x1532
+    USB_PID = 0x0C08
+    HAS_MATRIX = True
+    MATRIX_DIMS = [1, 19]
+    METHODS = ['get_device_type_mousemat', 'set_wave_effect', 'set_static_effect', 'set_spectrum_effect',
+               'set_none_effect', 'set_breath_random_effect', 'set_breath_single_effect', 'set_breath_dual_effect',
+               'set_custom_effect', 'set_key_row', 'set_reactive_effect', 'trigger_reactive_effect']
+
+    DEVICE_IMAGE = "https://dl.razerzone.com/src2/14141/14141-1-en-v1.png"
+
+
 class RazerFireflyHyperflux(__RazerDeviceBrightnessSuspend):
     """
     Class for the Razer Firefly Hyperflux (2018)
