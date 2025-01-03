@@ -11,7 +11,6 @@ import inspect
 import logging
 import time
 import json
-import random
 
 from openrazer_daemon.dbus_services.service import DBusService
 import openrazer_daemon.dbus_services.dbus_methods
@@ -47,13 +46,16 @@ class RazerDevice(DBusService):
 
     DEVICE_IMAGE = None
 
-    def __init__(self, device_path, device_number, config, persistence, testing, additional_interfaces, additional_methods):
+    def __init__(self, device_path, device_number, config, persistence, testing, additional_interfaces, additional_methods, unknown_serial_counter):
 
         self.logger = logging.getLogger('razer.device{0}'.format(device_number))
         self.logger.info("Initialising device.%d %s", device_number, self.__class__.__name__)
 
         # Serial cache
         self._serial = None
+
+        # Unknown Device Tracking
+        self._unknown_serial_counter: dict[tuple[int, int], int] = unknown_serial_counter     # maps vid/pid to last used unique character for unknown device
 
         # Local storage key name
         self.storage_name = "UnknownDevice"
@@ -986,9 +988,12 @@ class RazerDevice(DBusService):
             # - "As printed in the D cover"
             # - hex: 01 01 01 01 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16
             if not re.fullmatch(r"[A-Z]+[\dA-Z]+", serial):
-                self.logger.warning("Invalid serial number found, using a random one.")
+                self.logger.warning("Invalid serial number found, using a generated one.")
                 self.logger.warning("Original value: %s" % serial)
-                serial = 'UNKWN{0:012}'.format(random.randint(0, 4096))
+                vid, pid = self.get_vid_pid()
+                idx = self._unknown_serial_counter.get((vid, pid), 0)
+                self._unknown_serial_counter[(vid, pid)] = idx + 1
+                serial = "UNKNOWN_{0:04X}{1:04X}_{2:04d}".format(vid, pid, idx)
 
             self._serial = serial.replace(' ', '_')
 
