@@ -2104,6 +2104,7 @@ class RazerBlade182023(_RippleKeyboard):
 
     DEVICE_IMAGE = "https://dl.razerzone.com/src2/9676/9676-1-en-v1.png"
 
+
 class RazerBlade182024(_RippleKeyboard):
     """
     Class for the Razer Blade 18 (2024)
