@@ -42,6 +42,12 @@ The *[Startup]* section in the configuration file contains values to be used dur
 *battery_notifier_percent* _int_
 	This flag specifies what battery percentage the device should reach before sending notifications.
 
+*mouse_dpi_notifier* _bool_
+	This flag specifies that notifications should be shown regularly when mouse DPI changes.
+
+*mouse_dpi_notifier_freq* _int_
+	This flag specifies how often, in milliseconds, the notification for mouse DPI changes should be shown.
+
 *restore_persistence* _bool_
 	This flag specifies whether effects saved in persistence.conf should be applied when the daemon starts.
 

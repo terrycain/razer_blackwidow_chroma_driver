@@ -17,6 +17,7 @@ from openrazer_daemon.dbus_services.service import DBusService
 import openrazer_daemon.dbus_services.dbus_methods
 from openrazer_daemon.misc import effect_sync
 from openrazer_daemon.misc.battery_notifier import BatteryManager as _BatteryManager
+from openrazer_daemon.misc.dpi_notifier import DpiNotifierManager as _DpiNotifierManager
 
 
 # pylint: disable=too-many-instance-attributes
@@ -66,6 +67,7 @@ class RazerDevice(DBusService):
         if additional_interfaces is not None:
             self.additional_interfaces.extend(additional_interfaces)
         self._battery_manager = None
+        self._dpi_notifier_manager = None
 
         self.config = config
         self.persistence = persistence
@@ -319,6 +321,10 @@ class RazerDevice(DBusService):
         # Initialize battery manager if the device has support
         if 'get_battery' in self.METHODS:
             self._init_battery_manager()
+
+        # Initialize dpi notifier manager if the device has support
+        if 'get_dpi_xy' in self.METHODS or 'available_dpi' in self.METHODS:
+            self._init_dpi_notifier_manager()
 
         self.restore_dpi_poll_rate()
         self.restore_brightness()
@@ -1078,6 +1084,14 @@ class RazerDevice(DBusService):
         self._battery_manager.frequency = self.config.getint('Startup', 'battery_notifier_freq', fallback=10 * 60)
         self._battery_manager.percent = self.config.getint('Startup', 'battery_notifier_percent', fallback=33)
 
+    def _init_dpi_notifier_manager(self):
+        """
+        Initializes the DpiNotifierManager using the devices name
+        """
+        self._dpi_notifier_manager = _DpiNotifierManager(self, self._device_number, self.getDeviceName())  # pylint: disable=no-member
+        self._dpi_notifier_manager.frequency = self.config.getint('Startup', 'mouse_dpi_notifier_freq', fallback=500)
+        self._dpi_notifier_manager.active = self.config.getboolean('Startup', 'mouse_dpi_notifier', fallback=False)
+
     def get_vid_pid(self):
         """
         Get the usb VID PID
@@ -1168,6 +1182,9 @@ class RazerDevice(DBusService):
 
         if self._battery_manager:
             self._battery_manager.close()
+
+        if self._dpi_notifier_manager:
+            self._dpi_notifier_manager.close()
 
     def close(self):
         """
