@@ -49,6 +49,9 @@ pylib/docs/_build
 cmake-build-debug/*
 compile_commands.json
 
+# vscode
+.vscode
+
 # Cached/Pre-compiled Python files
 *.pyc
 __pycache__

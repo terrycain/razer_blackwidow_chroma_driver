@@ -17,7 +17,7 @@
 /*
  * Version Information
  */
-#define DRIVER_DESC "Razer Keyboard Device Driver"
+#define DRIVER_DESC "Razer Kraken Device Driver"
 
 MODULE_AUTHOR(DRIVER_AUTHOR);
 MODULE_DESCRIPTION(DRIVER_DESC);

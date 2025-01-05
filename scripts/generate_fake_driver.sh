@@ -182,7 +182,7 @@ while IFS= read -r device_raw; do
     device_attrs=$(echo "$device_attrs_lines" | get_attr_from_create_device_file)
 
     all_attrs=$(echo "$device_attrs"; echo "$common_attrs")
-    all_attrs=$(echo "$all_attrs" | sort)
+    all_attrs=$(echo "$all_attrs" | sort -u)
 
     if [ -z "$device_attrs_lines" ]; then
         echo "Error: couldn't find _probe lines for device $device"
