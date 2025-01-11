@@ -8,20 +8,22 @@ from openrazer_daemon.dbus_services import endpoint
 
 # Keyboard layout IDs
 # There are more than listed here, but others are not known yet.
-layoutids = {"01": "en_US",
-             "02": "el_GR",
-             "03": "de_DE",
-             "04": "fr_FR",
-             "05": "ru_RU",
-             "06": "en_GB",
-             "07": "Nordic",
-             "0A": "tr_TR",
-             "0C": "ja_JP",
-             "0F": "de_CH",
-             "10": "es_ES",
-             "11": "it_IT",
-             "12": "pt_PT",
-             "81": "en_US_mac"}
+layout_ids = {
+    "01": "en_US",
+    "02": "el_GR",
+    "03": "de_DE",
+    "04": "fr_FR",
+    "05": "ru_RU",
+    "06": "en_GB",
+    "07": "Nordic",
+    "0a": "tr_TR",
+    "0c": "ja_JP",
+    "0f": "de_CH",
+    "10": "es_ES",
+    "11": "it_IT",
+    "12": "pt_PT",
+    "81": "en_US_mac"
+}
 
 
 @endpoint('razer.device.misc', 'getDriverVersion', out_sig='s')
@@ -97,7 +99,7 @@ def get_keyboard_layout(self):
 
     with open(driver_path, 'r') as driver_file:
         try:
-            return layoutids[driver_file.read().strip()]
+            return layout_ids[driver_file.read().strip()]
         except KeyError:
             return "unknown"
 
