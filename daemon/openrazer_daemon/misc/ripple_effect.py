@@ -8,9 +8,129 @@ import logging
 import math
 import threading
 import time
+import colorsys
+import random
 
 # pylint: disable=import-error
 from openrazer_daemon.keyboard import KeyboardColour
+
+
+SPECTRUM_CONFIG = {
+    "s_range": (0.9, 1),
+    "v_range": (0.5, 0.7),
+    "min_h_diff": 1 / 6,  # minimum hue difference between two spectrum colors
+    "color_switch_time": 6,  # in seconds; time it takes for spectrum to switch colors
+    "color_wait_time": 1,  # in seconds; time between color switches
+}
+
+
+def random_color(prev_h=None):
+    """
+    Get random color.
+
+    :param prev_h:
+        Hue value of the previous color (from 0 to 1).
+        If set, pick a random color that is not close to this value.
+    :return: Tuple of floats from 0 to 1 (HSV).
+    """
+    if prev_h is None:
+        return random.uniform(0, 1), random.uniform(*SPECTRUM_CONFIG["s_range"]), SPECTRUM_CONFIG["v_range"][1]
+    else:
+        next_h = random.uniform(
+            prev_h + SPECTRUM_CONFIG["min_h_diff"],
+            prev_h - SPECTRUM_CONFIG["min_h_diff"] + 1  # hue is radial; this is the same as `prev_h - min_h_diff`
+            # 1 is added since uniform requires an interval
+        ) % 1  # hue is radial; get it's meaningful part only (decimal)
+        return next_h, random.uniform(*SPECTRUM_CONFIG["s_range"]), SPECTRUM_CONFIG["v_range"][1]
+
+
+def hsv_to_rgb(hsv):
+    """
+    Convert HSV color to RGB.
+
+    :param hsv: Tuple of HSV float values (from 0 to 1).
+    :return: Tuple of RGB int values (from 0 to 255).
+    """
+    return tuple(map(lambda x: int(256 * x), colorsys.hsv_to_rgb(*hsv)))
+
+
+def spectrum_generator(iter_num, wait_num):
+    """
+    Generator that returns a continuous sequence of random colors.
+
+    The sequence consists of peak colors and transition colors between them.
+
+    The peak colors are chosen randomly but distinctly from one another.
+
+    Transition colors are chosen as intermediate points between peak points and
+    have lower HSV value. Their hue and saturation change linearly.
+
+    Between any two peak colors there are exactly `iter_num-1` transition colors.
+
+    :param iter_num:
+        Number of transition colors between peak colors.
+        Thus, the time it takes to change from one random color to another is always constant
+        regardless of how similar the colors are.
+    :param wait_num:
+        Number of colors to generate between transitions.
+        E.g. after transitioning from color A to color B generator will
+        produce B `wait_num` time before transitioning to C.
+    :return:
+        Generator that returns colors similar to spectrum effect.
+        Returned colors are RGB int tuples from 0 to 255.
+    """
+    def get_current_color(first, second, iteration):
+        """
+        Get `iteration`-th transition color between peak colors `first` and `second`.
+
+        HSV value of transition colors decreases for the first half of the iteration process
+        and increases later.
+
+        HSV hue and saturation change linearly.
+
+        :param first: Source color (tuple of HSV floats from 0 to 1).
+        :param second: Destination color (tuple of HSV floats from 0 to 1).
+        :param iteration: Number of the current iteration step.
+        :return: Current transition color.
+        """
+        min_v, max_v = SPECTRUM_CONFIG["v_range"]
+
+        # trying to achieve fading effect
+        v = min_v + (max_v - min_v) * abs(1 - iteration * 2 / iter_num)
+        # v decreases from max to min in the first half
+        # v increases from min to max in the second half
+
+        # below: note that hue is radial
+        if abs(first[0] - second[0]) < 0.5:
+            h = first[0] + (second[0] - first[0]) * iteration / iter_num
+        else:
+            # cycling through 0/1 is faster than going through the whole spectrum
+            # without this we almost never go through red (which is hue=0)
+            if first[0] > second[0]:
+                # first is close to 1; move second closer to 1 too
+                h = (first[0] + (second[0] + 1 - first[0]) * iteration / iter_num) % 1
+            else:
+                # first is close to 0; move second closer to 0 too
+                h = (first[0] + (second[0] - 1 - first[0]) * iteration / iter_num) % 1
+        # this could be shortened but I think this is easier to understand
+
+        s = first[1] + (second[1] - first[1]) * iteration / iter_num
+
+        return h, s, v
+
+    prev_color = random_color()
+
+    next_color = random_color(prev_h=prev_color[0])
+
+    while True:
+        for i in range(wait_num):
+            yield hsv_to_rgb(prev_color)
+
+        for i in range(iter_num):
+            yield hsv_to_rgb(get_current_color(prev_color, next_color, i))
+
+        prev_color = next_color
+        next_color = random_color(prev_h=prev_color[0])
 
 
 class RippleEffectThread(threading.Thread):
@@ -27,7 +147,7 @@ class RippleEffectThread(threading.Thread):
         self._parent = parent
 
         self._colour = (0, 255, 0)
-        self._refresh_rate = 0.040
+        self._refresh_rate = 0.010
 
         self._shutdown = False
         self._active = False
@@ -97,12 +217,29 @@ class RippleEffectThread(threading.Thread):
         """
         self._active = False
 
+    def set_background_color(self, color, needslogohandling):
+        """
+        Set background color for every key.
+
+        :param color: Tuple of RGB int values (from 0 to 255).
+        :param needslogohandling: If the keyboard has a virtual row for logo handling.
+        :return:
+        """
+        for row in range(self._rows - int(needslogohandling)):
+            for col in range(self._cols):
+                self._keyboard_grid.set_key_colour(row, col, color)
+
     def run(self):
         """
         Event loop
         """
         # pylint: disable=too-many-nested-blocks,too-many-branches
         expire_diff = datetime.timedelta(seconds=2)
+
+        color_generator = spectrum_generator(
+            int(SPECTRUM_CONFIG["color_switch_time"] / self._refresh_rate),
+            int(SPECTRUM_CONFIG["color_wait_time"] / self._refresh_rate)
+        )
 
         # self._parent: RippleManager
         # self._parent._parent: The device class (e.g. RazerBlackWidowUltimate2013)
@@ -118,6 +255,8 @@ class RippleEffectThread(threading.Thread):
             if self._active:
                 # Clear keyboard
                 self._keyboard_grid.reset_rows()
+
+                self.set_background_color(next(color_generator), needslogohandling)
 
                 now = datetime.datetime.now()
 
