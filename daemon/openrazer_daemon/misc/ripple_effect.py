@@ -27,7 +27,7 @@ class RippleEffectThread(threading.Thread):
         self._parent = parent
 
         self._colour = (0, 255, 0)
-        self._refresh_rate = 0.040
+        self._refresh_rate = 0.010
 
         self._shutdown = False
         self._active = False
@@ -97,7 +97,15 @@ class RippleEffectThread(threading.Thread):
         """
         self._active = False
 
+    def static_reset(self):
+        self._keyboard_grid.reset_rows()
+        for row in range(self._rows -1 ):
+            for col in range(self._cols -1):
+                self._keyboard_grid.set_key_colour(row, col, self.low_colour)
+
     def run(self):
+        self.low_colour = (0, 40, 0) # this needs to be changes but i only got a green only keyboard.
+        self.static_reset()
         """
         Event loop
         """
@@ -117,7 +125,7 @@ class RippleEffectThread(threading.Thread):
         while not self._shutdown:
             if self._active:
                 # Clear keyboard
-                self._keyboard_grid.reset_rows()
+                self.static_reset()
 
                 now = datetime.datetime.now()
 
